@@ -484,29 +484,30 @@ var TPL = `<div lang="{{lang}}" style="font-family: 'Roboto Mono', ui-monospace,
 
 <sc-page show="home">
   <!-- HERO -->
-  <section id="inicio" style="background: #F7BE4A">
-    <div style="max-width: 1240px; margin: 0 auto; padding: 72px 24px 64px; display: flex; flex-wrap: wrap; gap: 48px; align-items: center">
+  <section id="inicio" style="position: relative; overflow: hidden; background: #4B2410 url(hero.jpg) center / cover no-repeat">
+    <video id="heroVid" autoplay muted loop playsinline preload="auto" poster="hero.jpg" aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0"><source src="hero.mp4" type="video/mp4"></video>
+    <div aria-hidden="true" style="position: absolute; inset: 0; z-index: 1; background: linear-gradient(90deg, rgba(43,20,8,0.88) 0%, rgba(43,20,8,0.72) 45%, rgba(43,20,8,0.35) 100%)"></div>
+    <div style="position: relative; z-index: 2; max-width: 1240px; margin: 0 auto; padding: 112px 24px 104px; display: flex; flex-wrap: wrap; gap: 48px; align-items: center; min-height: 520px">
       <div style="flex: 1 1 480px; min-width: 0; display: flex; flex-direction: column; gap: 24px">
         <a href="https://share.google/5wuHtF89rM0Ik9sIl" target="_blank" rel="noopener" style="text-decoration: none; color: #2E2E2E; display: inline-flex; align-self: flex-start; align-items: center; gap: 10px; background: #FFF4D9; border: 1px solid #EAD49A; border-radius: 999px; padding: 8px 16px; font-size: 13px; min-height: 44px">
           <span style="font-weight: 700">4.2</span>
           <span style="letter-spacing: 2px" aria-hidden="true"><span style="color: #E0A100">★★★★</span><span style="color: #E8D9A8">★</span></span>
           <span style="color: #555555">{{s.reviews}}</span>
         </a>
-        <h1 style="margin: 0; font-size: 56px; line-height: 1.05; letter-spacing: -1.5px; color: {{accent}}; font-weight: 700">{{s.heroTitle}}</h1>
-        <p style="margin: 0; font-size: 17px; max-width: 520px; color: #444444">{{s.heroSub}}</p>
+        <h1 style="margin: 0; font-size: 60px; line-height: 1.05; letter-spacing: -1.5px; color: #F7BE4A; font-weight: 700; text-shadow: 0 2px 12px rgba(0,0,0,0.35)">{{s.heroTitle}}</h1>
+        <p style="margin: 0; font-size: 18px; max-width: 540px; color: #FFF4D9">{{s.heroSub}}</p>
         <div style="display: flex; flex-wrap: wrap; gap: 12px">
           <a href="#menu" style="text-decoration: none; background: {{accent}}; color: #FFF4D9; padding: 14px 24px; border-radius: 999px; font-weight: 500; letter-spacing: 1px; font-size: 14px; min-height: 48px; display: inline-flex; align-items: center">{{s.ctaMenu}}</a>
-          <a href="#pickup" style="text-decoration: none; border: 1.5px solid {{accent}}; color: {{accent}}; padding: 14px 24px; border-radius: 999px; font-weight: 500; letter-spacing: 1px; font-size: 14px; min-height: 48px; display: inline-flex; align-items: center">{{s.ctaPickup2}}</a>
-          <a href="#catering" style="text-decoration: none; background: #4B2410; color: #F7BE4A; padding: 14px 24px; border-radius: 999px; font-weight: 500; letter-spacing: 1px; font-size: 14px; min-height: 48px; display: inline-flex; align-items: center; gap: 8px"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F7BE4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18h18"></path><path d="M5 18a7 7 0 0 1 14 0"></path><path d="M12 8V6"></path><path d="M10 6h4"></path></svg>{{s.cateringBtn}}</a>
+          <a href="#pickup" style="text-decoration: none; border: 1.5px solid #FFF4D9; color: #FFF4D9; padding: 14px 24px; border-radius: 999px; font-weight: 500; letter-spacing: 1px; font-size: 14px; min-height: 48px; display: inline-flex; align-items: center">{{s.ctaPickup2}}</a>
+          <a href="#catering" style="text-decoration: none; background: #F7BE4A; color: #4B2410; padding: 14px 24px; border-radius: 999px; font-weight: 500; letter-spacing: 1px; font-size: 14px; min-height: 48px; display: inline-flex; align-items: center; gap: 8px"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4B2410" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18h18"></path><path d="M5 18a7 7 0 0 1 14 0"></path><path d="M12 8V6"></path><path d="M10 6h4"></path></svg>{{s.cateringBtn}}</a>
         </div>
-        <div style="display: flex; flex-wrap: wrap; gap: 8px 24px; font-size: 13px; letter-spacing: 1px; color: #555555">
+        <div style="display: flex; flex-wrap: wrap; gap: 8px 24px; font-size: 13px; letter-spacing: 1px; color: #FFF4D9">
           <span>474 US HWY 64 E, PLYMOUTH, NC</span>
-          <span style="display: inline-flex; align-items: center; gap: 8px"><span style="width: 8px; height: 8px; border-radius: 50%; background: #3F7A2A; display: inline-block" aria-hidden="true"></span>{{s.openDaily}}</span>
+          <span style="display: inline-flex; align-items: center; gap: 8px"><span style="width: 8px; height: 8px; border-radius: 50%; background: #5FD068; display: inline-block" aria-hidden="true"></span>{{s.openDaily}}</span>
         </div>
       </div>
-      <div style="flex: 1 1 420px; min-width: 0; position: relative">
-        <div role="img" aria-label="{{s.photo1}}" style="aspect-ratio: 4 / 3.2; width: 100%; border-radius: 24px; background: #F7E3A6; border: 2px dashed #D9B95A; display: flex; align-items: center; justify-content: center; color: #6B4A1A; font-size: 13px; letter-spacing: 2px; text-align: center; padding: 24px">{{s.photo1}}</div>
-        <svg aria-hidden="true" width="120" height="120" viewBox="0 0 120 120" style="position: absolute; right: -24px; bottom: -36px" fill="none" stroke="{{accent}}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    </div>
+    <svg aria-hidden="true" width="120" height="120" viewBox="0 0 120 120" style="position: absolute; right: 32px; bottom: 28px; z-index: 2; opacity: 0.9" fill="none" stroke="#F7BE4A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
           <path d="M16 30h80"></path>
           <path d="M16 30c0 22 20 32 40 32s40-10 40-32"></path>
           <path d="M26 40h60"></path>
@@ -516,8 +517,6 @@ var TPL = `<div lang="{{lang}}" style="font-family: 'Roboto Mono', ui-monospace,
           <path d="M96 30v-10M96 30l-8-7M96 30l8-7"></path>
           <path d="M70 30l14-22"></path>
         </svg>
-      </div>
-    </div>
   </section>
 
   <!-- STRIP -->
@@ -764,6 +763,7 @@ function render() {
   document.querySelectorAll('#app [data-keep]').forEach(function (el) { if (kept[el.name] != null) el.value = kept[el.name]; });
   document.documentElement.lang = vals.lang;
   setupReveal();
+  heroVideo();
   REV_LANG = vals.lang; drawRev(); if (!REV_T) restartRev();
   if (window.syncSidebar) syncSidebar(vals.lang, vals.tabs, vals.page);
 }
@@ -803,6 +803,12 @@ function restartRev() {
   if (REV_RM) return;
   clearInterval(REV_T);
   REV_T = setInterval(function () { if (!REV_PAUSE && !document.hidden) goRev(REV_I + 1); }, 7000);
+}
+function heroVideo() {
+  var v = document.getElementById('heroVid'); if (!v) return;
+  v.muted = true;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { v.removeAttribute('autoplay'); v.pause(); return; }
+  var pr = v.play(); if (pr && pr.catch) pr.catch(function () {});
 }
 var SEEN = {};
 window.addEventListener('hashchange', function () {
