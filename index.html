@@ -190,7 +190,7 @@ class Component extends DCLogic {
     var lang = this.state.lang || this.props.startLang || 'en';
     var T = {
       es: {
-        cateringBtn: "CATERING", catTitle: "CATERING PARA TU EVENTO", catText: "Fiestas, reuniones de trabajo, cumpleaños y más. Llámanos o escríbenos y te preparamos una cotización.", catCall: "LLAMA: 252-505-1441", tagline: "RESTAURANTE MEXICANO", navLabel: "Principal", navMenu: "MENÚ", navAbout: "NOSOTROS", navVisit: "VISÍTANOS",
+        catOr: "¿Prefieres hablar con nosotros? Llama o escribe:", formTitle: "SOLICITA UNA COTIZACIÓN", fName: "NOMBRE *", fPhone: "TELÉFONO *", fEmail: "CORREO ELECTRÓNICO", fDate: "FECHA DEL EVENTO *", fTime: "HORA", fGuests: "NÚMERO DE PERSONAS *", fType: "TIPO DE EVENTO", types: ["Cumpleaños", "Boda", "Quinceañera", "Graduación", "Trabajo / empresa", "Iglesia / comunidad", "Otro"], fService: "SERVICIO", svcPick: "Recoger en el restaurante", svcDel: "Entrega en el lugar del evento", fPlace: "LUGAR DEL EVENTO (SI ES ENTREGA)", fMsg: "DETALLES: PLATILLOS QUE TE INTERESAN, PRESUPUESTO, ETC.", fReq: "* obligatorio", fSend: "ENVIAR SOLICITUD", sentT: "¡Casi listo!", sentP: "Se abrió tu aplicación de correo con tu solicitud. Presiona Enviar para terminar. Si no se abrió, llámanos al 252-505-1441 o escribe a casagarciallc@gmail.com.", again: "Enviar otra solicitud", cateringBtn: "CATERING", catTitle: "CATERING PARA TU EVENTO", catText: "Fiestas, reuniones de trabajo, cumpleaños y más. Llámanos o escríbenos y te preparamos una cotización.", catCall: "LLAMA: 252-505-1441", tagline: "RESTAURANTE MEXICANO", navLabel: "Principal", navMenu: "MENÚ", navAbout: "NOSOTROS", navVisit: "VISÍTANOS",
         ctaPickup: "PEDIR PARA LLEVAR", ctaPickup2: "PIDE PARA LLEVAR", ctaMenu: "EXPLORA EL MENÚ", seeMenu: "VER EL MENÚ",
         callBtn: "LLAMA: (252) 791-1229", callUs: "LLÁMANOS",
         reviews: "597 reseñas en Google",
@@ -217,7 +217,7 @@ class Component extends DCLogic {
         hurry: "¿Con prisa?", hurrySub: "Llama y recoge tu pedido para llevar", order: "LLAMAR"
       },
       en: {
-        cateringBtn: "CATERING", catTitle: "CATERING FOR YOUR EVENT", catText: "Parties, work lunches, birthdays and more. Call or email us and we\u2019ll put together a quote for you.", catCall: "CALL 252-505-1441", tagline: "MEXICAN RESTAURANT", navLabel: "Main", navMenu: "MENU", navAbout: "ABOUT US", navVisit: "VISIT US",
+        catOr: "Rather talk to us? Call or email:", formTitle: "REQUEST A QUOTE", fName: "NAME *", fPhone: "PHONE *", fEmail: "EMAIL", fDate: "EVENT DATE *", fTime: "TIME", fGuests: "NUMBER OF GUESTS *", fType: "TYPE OF EVENT", types: ["Birthday", "Wedding", "Quinceañera", "Graduation", "Work / business", "Church / community", "Other"], fService: "SERVICE", svcPick: "Pick up at the restaurant", svcDel: "Delivery to the event", fPlace: "EVENT LOCATION (IF DELIVERY)", fMsg: "DETAILS: DISHES YOU\u2019RE INTERESTED IN, BUDGET, ETC.", fReq: "* required", fSend: "SEND INQUIRY", sentT: "Almost done!", sentP: "Your email app opened with your inquiry filled in. Press Send to finish. If nothing opened, call us at 252-505-1441 or email casagarciallc@gmail.com.", again: "Send another inquiry", cateringBtn: "CATERING", catTitle: "CATERING FOR YOUR EVENT", catText: "Parties, work lunches, birthdays and more. Call or email us and we\u2019ll put together a quote for you.", catCall: "CALL 252-505-1441", tagline: "MEXICAN RESTAURANT", navLabel: "Main", navMenu: "MENU", navAbout: "ABOUT US", navVisit: "VISIT US",
         ctaPickup: "ORDER TAKEOUT", ctaPickup2: "ORDER TAKEOUT", ctaMenu: "EXPLORE THE MENU", seeMenu: "SEE THE MENU",
         callBtn: "CALL (252) 791-1229", callUs: "CALL US",
         reviews: "597 Google reviews",
@@ -445,7 +445,7 @@ class Component extends DCLogic {
       };
     });
     var ways = s.ways.map(function (w, i) { return { n: '0' + (i + 1), title: w[0], text: w[1] }; });
-    return { accent: accent, lang: lang, s: s, strip: s.strip, langs: langs, tabs: tabs, items: items, catNote: catNote, ways: ways };
+    return { accent: accent, lang: lang, s: s, strip: s.strip, langs: langs, tabs: tabs, items: items, catNote: catNote, ways: ways, catSent: !!this.state.catSent, notSent: !this.state.catSent, resetCat: function () { self.setState({ catSent: false }); } };
   }
 }
 var TPL = `<div lang="{{lang}}" style="font-family: 'Roboto Mono', ui-monospace, Menlo, monospace; color: #3A3A3A; background: #FFF4D9; width: 100%; font-size: 15px; line-height: 1.6">
@@ -546,14 +546,43 @@ var TPL = `<div lang="{{lang}}" style="font-family: 'Roboto Mono', ui-monospace,
 
   <!-- CATERING -->
   <section id="catering" style="background: #F7BE4A; border-top: 4px solid #4B2410; border-bottom: 4px solid #4B2410">
-    <div style="max-width: 1240px; margin: 0 auto; padding: 72px 24px; display: flex; flex-wrap: wrap; gap: 32px; align-items: center; justify-content: space-between">
-      <div style="flex: 1 1 460px; min-width: 0; display: flex; flex-direction: column; gap: 14px">
+    <div style="max-width: 1240px; margin: 0 auto; padding: 72px 24px; display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start">
+      <div style="flex: 1 1 340px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
         <h2 style="margin: 0; font-size: 44px; line-height: 1.05; letter-spacing: -1px; color: #4B2410">{{s.catTitle}}</h2>
-        <p style="margin: 0; font-size: 17px; max-width: 560px; color: #2E2E2E">{{s.catText}}</p>
+        <p style="margin: 0; font-size: 17px; color: #2E2E2E">{{s.catText}}</p>
+        <p style="margin: 0; font-size: 14px; color: #2E2E2E">{{s.catOr}}</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 10px">
+          <a href="tel:+12525051441" style="text-decoration: none; background: #4B2410; color: #FFF4D9; padding: 12px 20px; border-radius: 999px; font-weight: 600; letter-spacing: 1px; font-size: 14px; min-height: 48px; display: inline-flex; align-items: center">252-505-1441</a>
+          <a href="mailto:casagarciallc@gmail.com?subject=Catering" style="text-decoration: none; border: 1.5px solid #4B2410; color: #4B2410; padding: 12px 20px; border-radius: 999px; font-size: 13px; min-height: 48px; display: inline-flex; align-items: center; word-break: break-all">casagarciallc@gmail.com</a>
+        </div>
       </div>
-      <div style="display: flex; flex-direction: column; gap: 12px; flex: 0 1 340px">
-        <a href="tel:+12525051441" style="text-decoration: none; background: {{accent}}; color: #FFF4D9; padding: 14px 24px; border-radius: 999px; font-weight: 600; letter-spacing: 1px; font-size: 15px; min-height: 52px; display: flex; align-items: center; justify-content: center">{{s.catCall}}</a>
-        <a href="mailto:casagarciallc@gmail.com?subject=Catering" style="text-decoration: none; background: #4B2410; color: #FFF4D9; padding: 14px 24px; border-radius: 999px; font-weight: 500; letter-spacing: 0.5px; font-size: 14px; min-height: 52px; display: flex; align-items: center; justify-content: center; word-break: break-all; text-align: center">casagarciallc@gmail.com</a>
+      <div style="flex: 1 1 520px; min-width: 0; background: #FFF4D9; border: 2px solid #4B2410; border-radius: 24px; padding: 28px; display: flex; flex-direction: column; gap: 18px">
+        <h3 style="margin: 0; font-size: 20px; letter-spacing: 1.5px; color: {{accent}}">{{s.formTitle}}</h3>
+        <sc-if value="{{catSent}}">
+          <div role="status" style="display: flex; flex-direction: column; gap: 12px">
+            <strong style="font-size: 18px; color: #1F6B34">{{s.sentT}}</strong>
+            <p style="margin: 0; font-size: 15px; color: #2E2E2E">{{s.sentP}}</p>
+            <button type="button" onclick="{{resetCat}}" style="align-self: flex-start; font: inherit; cursor: pointer; background: none; border: 1.5px solid #4B2410; color: #4B2410; padding: 10px 18px; border-radius: 999px; min-height: 44px">{{s.again}}</button>
+          </div>
+        </sc-if>
+        <sc-if value="{{notSent}}">
+          <form id="catForm" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px">
+            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 12px; letter-spacing: 1px; font-weight: 700; color: #4B2410;">{{s.fName}}<input data-keep="1" name="name" type="text" required autocomplete="name" style="width: 100%; box-sizing: border-box; min-height: 46px; padding: 10px 14px; border: 1.5px solid #D9B95A; border-radius: 12px; background: #FFFFFF; color: #2E2E2E; font: inherit; font-size: 15px"></label>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 12px; letter-spacing: 1px; font-weight: 700; color: #4B2410;">{{s.fPhone}}<input data-keep="1" name="phone" type="tel" required autocomplete="tel" style="width: 100%; box-sizing: border-box; min-height: 46px; padding: 10px 14px; border: 1.5px solid #D9B95A; border-radius: 12px; background: #FFFFFF; color: #2E2E2E; font: inherit; font-size: 15px"></label>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 12px; letter-spacing: 1px; font-weight: 700; color: #4B2410;">{{s.fEmail}}<input data-keep="1" name="email" type="email" autocomplete="email" style="width: 100%; box-sizing: border-box; min-height: 46px; padding: 10px 14px; border: 1.5px solid #D9B95A; border-radius: 12px; background: #FFFFFF; color: #2E2E2E; font: inherit; font-size: 15px"></label>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 12px; letter-spacing: 1px; font-weight: 700; color: #4B2410;">{{s.fDate}}<input data-keep="1" name="date" type="date" required style="width: 100%; box-sizing: border-box; min-height: 46px; padding: 10px 14px; border: 1.5px solid #D9B95A; border-radius: 12px; background: #FFFFFF; color: #2E2E2E; font: inherit; font-size: 15px"></label>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 12px; letter-spacing: 1px; font-weight: 700; color: #4B2410;">{{s.fTime}}<input data-keep="1" name="time" type="time" style="width: 100%; box-sizing: border-box; min-height: 46px; padding: 10px 14px; border: 1.5px solid #D9B95A; border-radius: 12px; background: #FFFFFF; color: #2E2E2E; font: inherit; font-size: 15px"></label>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 12px; letter-spacing: 1px; font-weight: 700; color: #4B2410;">{{s.fGuests}}<input data-keep="1" name="guests" type="number" min="1" inputmode="numeric" required style="width: 100%; box-sizing: border-box; min-height: 46px; padding: 10px 14px; border: 1.5px solid #D9B95A; border-radius: 12px; background: #FFFFFF; color: #2E2E2E; font: inherit; font-size: 15px"></label>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 12px; letter-spacing: 1px; font-weight: 700; color: #4B2410;">{{s.fType}}<select data-keep="1" name="type" style="width: 100%; box-sizing: border-box; min-height: 46px; padding: 10px 14px; border: 1.5px solid #D9B95A; border-radius: 12px; background: #FFFFFF; color: #2E2E2E; font: inherit; font-size: 15px"><sc-for list="{{s.types}}" as="t"><option value="{{t}}">{{t}}</option></sc-for></select></label>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 12px; letter-spacing: 1px; font-weight: 700; color: #4B2410;">{{s.fService}}<select data-keep="1" name="service" style="width: 100%; box-sizing: border-box; min-height: 46px; padding: 10px 14px; border: 1.5px solid #D9B95A; border-radius: 12px; background: #FFFFFF; color: #2E2E2E; font: inherit; font-size: 15px"><option value="pickup">{{s.svcPick}}</option><option value="delivery">{{s.svcDel}}</option></select></label>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 12px; letter-spacing: 1px; font-weight: 700; color: #4B2410; grid-column: 1 / -1;">{{s.fPlace}}<input data-keep="1" name="place" type="text" autocomplete="street-address" style="width: 100%; box-sizing: border-box; min-height: 46px; padding: 10px 14px; border: 1.5px solid #D9B95A; border-radius: 12px; background: #FFFFFF; color: #2E2E2E; font: inherit; font-size: 15px"></label>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 12px; letter-spacing: 1px; font-weight: 700; color: #4B2410; grid-column: 1 / -1;">{{s.fMsg}}<textarea data-keep="1" name="msg" rows="4" style="width: 100%; box-sizing: border-box; min-height: 46px; padding: 10px 14px; border: 1.5px solid #D9B95A; border-radius: 12px; background: #FFFFFF; color: #2E2E2E; font: inherit; font-size: 15px; resize: vertical; min-height: 110px"></textarea></label>
+            <div style="grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+              <span style="font-size: 12px; color: #4B2410">{{s.fReq}}</span>
+              <button type="submit" style="font: inherit; cursor: pointer; border: none; background: {{accent}}; color: #FFF4D9; padding: 14px 28px; border-radius: 999px; font-weight: 600; letter-spacing: 1px; font-size: 15px; min-height: 52px">{{s.fSend}}</button>
+            </div>
+          </form>
+        </sc-if>
       </div>
     </div>
   </section>
@@ -685,16 +714,38 @@ function fors(str, scope) {
 function __fn(i) { FNS[i](); }
 var comp = new Component({});
 function render() {
+  var kept = {}; document.querySelectorAll('#app [data-keep]').forEach(function (el) { kept[el.name] = el.value; });
   FNS = [];
   var vals = comp.renderVals();
   var out = fors(TPL, vals);
   out = fill(ifs(out, vals), vals);
   document.getElementById('app').innerHTML = out;
+  document.querySelectorAll('#app [data-keep]').forEach(function (el) { if (kept[el.name] != null) el.value = kept[el.name]; });
   document.documentElement.lang = vals.lang;
   setupReveal();
   if (window.syncSidebar) syncSidebar(vals.lang);
 }
 var SEEN = {};
+document.addEventListener('submit', function (e) {
+  if (!e.target || e.target.id !== 'catForm') return;
+  e.preventDefault();
+  var f = e.target;
+  if (f.reportValidity && !f.reportValidity()) return;
+  var v = function (n) { return (f.elements[n] && f.elements[n].value || '').trim(); };
+  var svc = v('service') === 'delivery' ? 'Delivery to the event' : 'Pick up at the restaurant';
+  var lines = [
+    'CATERING INQUIRY (from casagarcianc.com)', '',
+    'Name: ' + v('name'), 'Phone: ' + v('phone'), 'Email: ' + (v('email') || '-'), '',
+    'Event date: ' + v('date'), 'Time: ' + (v('time') || '-'), 'Number of guests: ' + v('guests'),
+    'Type of event: ' + v('type'), 'Service: ' + svc, 'Event location: ' + (v('place') || '-'), '',
+    'Details:', v('msg') || '-'
+  ];
+  var subject = 'Catering inquiry - ' + v('name') + ' - ' + v('date') + ' (' + v('guests') + ' guests)';
+  var url = 'mailto:casagarciallc@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(lines.join('\n'));
+  window.location.href = url;
+  comp.setState({ catSent: true });
+  var c = document.getElementById('catering'); if (c) c.scrollIntoView({ behavior: 'smooth' });
+});
 var IO = ('IntersectionObserver' in window) ? new IntersectionObserver(function (es) {
   es.forEach(function (e) {
     if (e.isIntersecting) { e.target.classList.add('in'); SEEN[e.target.dataset.rk] = 1; IO.unobserve(e.target); }
