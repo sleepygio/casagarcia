@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -102,7 +102,7 @@ class Component extends DCLogic {
   renderVals() {
     var accent = this.props.accent ?? '#B3301A';
     var self = this;
-    var lang = this.state.lang || this.props.startLang || 'es';
+    var lang = this.state.lang || this.props.startLang || 'en';
     var T = {
       es: {
         tagline: "RESTAURANTE MEXICANO", navLabel: "Principal", navMenu: "MENÚ", navAbout: "NOSOTROS", navVisit: "VISÍTANOS",
@@ -351,7 +351,7 @@ class Component extends DCLogic {
     var catNote = (lang === 'en' ? cat.noteEn : cat.noteEs) || '';
     var items = cat.items.map(function (x) { return { name: x[0], price: x[1], desc: x[2] }; });
     var small = 'font-family: inherit; font-size: 12px; letter-spacing: 1px; padding: 8px 14px; border-radius: 999px; border: none; cursor: pointer; min-height: 36px; min-width: 44px; ';
-    var langs = [['es', 'ES', 'Español'], ['en', 'EN', 'English']].map(function (d) {
+    var langs = [['en', 'EN', 'English'], ['es', 'ES', 'Español']].map(function (d) {
       var sel = lang === d[0];
       return {
         label: d[1], name: d[2], sel: sel ? 'true' : 'false',
@@ -667,7 +667,7 @@ render();
     links.forEach(function (a) { a.classList.toggle('on', a.dataset.sec === cur); });
   }
   window.addEventListener('scroll', spy, {passive: true});
-  syncSidebar(document.documentElement.lang || 'es');
+  syncSidebar(document.documentElement.lang || 'en');
 })();
 </script>
 </body>
