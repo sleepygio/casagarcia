@@ -134,6 +134,7 @@ a{color:#8E2614}a:hover{color:#6B1C0E}
     <div class="mrow"><a href="#menu" data-sec="menu" data-t="menu"></a><button type="button" id="catBtn" aria-expanded="false" aria-controls="sbCats"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F7BE4A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg></button></div>
     <div class="cats" id="sbCats" hidden></div>
     <a href="#pickup" data-sec="pickup" data-t="pickup"></a>
+    <a href="#catering" data-sec="catering" data-t="cat"></a>
     <a href="#visitanos" data-sec="visitanos" data-t="visit"></a>
   </nav>
   <div>
@@ -189,7 +190,7 @@ class Component extends DCLogic {
     var lang = this.state.lang || this.props.startLang || 'en';
     var T = {
       es: {
-        tagline: "RESTAURANTE MEXICANO", navLabel: "Principal", navMenu: "MENÚ", navAbout: "NOSOTROS", navVisit: "VISÍTANOS",
+        cateringBtn: "CATERING", catTitle: "CATERING PARA TU EVENTO", catText: "Fiestas, reuniones de trabajo, cumpleaños y más. Llámanos o escríbenos y te preparamos una cotización.", catCall: "LLAMA: 252-505-1441", tagline: "RESTAURANTE MEXICANO", navLabel: "Principal", navMenu: "MENÚ", navAbout: "NOSOTROS", navVisit: "VISÍTANOS",
         ctaPickup: "PEDIR PARA LLEVAR", ctaPickup2: "PIDE PARA LLEVAR", ctaMenu: "EXPLORA EL MENÚ", seeMenu: "VER EL MENÚ",
         callBtn: "LLAMA: (252) 791-1229", callUs: "LLÁMANOS",
         reviews: "597 reseñas en Google",
@@ -216,7 +217,7 @@ class Component extends DCLogic {
         hurry: "¿Con prisa?", hurrySub: "Llama y recoge tu pedido para llevar", order: "LLAMAR"
       },
       en: {
-        tagline: "MEXICAN RESTAURANT", navLabel: "Main", navMenu: "MENU", navAbout: "ABOUT US", navVisit: "VISIT US",
+        cateringBtn: "CATERING", catTitle: "CATERING FOR YOUR EVENT", catText: "Parties, work lunches, birthdays and more. Call or email us and we\u2019ll put together a quote for you.", catCall: "CALL 252-505-1441", tagline: "MEXICAN RESTAURANT", navLabel: "Main", navMenu: "MENU", navAbout: "ABOUT US", navVisit: "VISIT US",
         ctaPickup: "ORDER TAKEOUT", ctaPickup2: "ORDER TAKEOUT", ctaMenu: "EXPLORE THE MENU", seeMenu: "SEE THE MENU",
         callBtn: "CALL (252) 791-1229", callUs: "CALL US",
         reviews: "597 Google reviews",
@@ -481,6 +482,7 @@ var TPL = `<div lang="{{lang}}" style="font-family: 'Roboto Mono', ui-monospace,
         <div style="display: flex; flex-wrap: wrap; gap: 12px">
           <a href="#menu" style="text-decoration: none; background: {{accent}}; color: #FFF4D9; padding: 14px 24px; border-radius: 999px; font-weight: 500; letter-spacing: 1px; font-size: 14px; min-height: 48px; display: inline-flex; align-items: center">{{s.ctaMenu}}</a>
           <a href="#pickup" style="text-decoration: none; border: 1.5px solid {{accent}}; color: {{accent}}; padding: 14px 24px; border-radius: 999px; font-weight: 500; letter-spacing: 1px; font-size: 14px; min-height: 48px; display: inline-flex; align-items: center">{{s.ctaPickup2}}</a>
+          <a href="#catering" style="text-decoration: none; background: #4B2410; color: #F7BE4A; padding: 14px 24px; border-radius: 999px; font-weight: 500; letter-spacing: 1px; font-size: 14px; min-height: 48px; display: inline-flex; align-items: center; gap: 8px"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F7BE4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18h18"></path><path d="M5 18a7 7 0 0 1 14 0"></path><path d="M12 8V6"></path><path d="M10 6h4"></path></svg>{{s.cateringBtn}}</a>
         </div>
         <div style="display: flex; flex-wrap: wrap; gap: 8px 24px; font-size: 13px; letter-spacing: 1px; color: #555555">
           <span>474 US HWY 64 E, PLYMOUTH, NC</span>
@@ -539,6 +541,20 @@ var TPL = `<div lang="{{lang}}" style="font-family: 'Roboto Mono', ui-monospace,
         <blockquote style="margin: 0; font-size: 18px; color: #2E2E2E">{{s.review}}</blockquote>
         <figcaption style="font-size: 12px; letter-spacing: 1px; color: #666666">{{s.reviewBy}}</figcaption>
       </figure>
+    </div>
+  </section>
+
+  <!-- CATERING -->
+  <section id="catering" style="background: #F7BE4A; border-top: 4px solid #4B2410; border-bottom: 4px solid #4B2410">
+    <div style="max-width: 1240px; margin: 0 auto; padding: 72px 24px; display: flex; flex-wrap: wrap; gap: 32px; align-items: center; justify-content: space-between">
+      <div style="flex: 1 1 460px; min-width: 0; display: flex; flex-direction: column; gap: 14px">
+        <h2 style="margin: 0; font-size: 44px; line-height: 1.05; letter-spacing: -1px; color: #4B2410">{{s.catTitle}}</h2>
+        <p style="margin: 0; font-size: 17px; max-width: 560px; color: #2E2E2E">{{s.catText}}</p>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px; flex: 0 1 340px">
+        <a href="tel:+12525051441" style="text-decoration: none; background: {{accent}}; color: #FFF4D9; padding: 14px 24px; border-radius: 999px; font-weight: 600; letter-spacing: 1px; font-size: 15px; min-height: 52px; display: flex; align-items: center; justify-content: center">{{s.catCall}}</a>
+        <a href="mailto:casagarciallc@gmail.com?subject=Catering" style="text-decoration: none; background: #4B2410; color: #FFF4D9; padding: 14px 24px; border-radius: 999px; font-weight: 500; letter-spacing: 0.5px; font-size: 14px; min-height: 52px; display: flex; align-items: center; justify-content: center; word-break: break-all; text-align: center">casagarciallc@gmail.com</a>
+      </div>
     </div>
   </section>
 
@@ -712,8 +728,8 @@ render();
 <script>
 (function () {
   var L = {
-    es: {home:"INICIO",menu:"MENÚ",pickup:"PARA LLEVAR",visit:"VISÍTANOS",loc:"UBICACIÓN",dir:"Cómo llegar →",hours:"HORARIO",ms:"Lun–Sáb",msh:"11:00–22:00",su:"Domingo",suh:"11:00–21:00",call:"LLAMAR (252) 791-1229",seeMenu:"VER EL MENÚ",social:"REDES SOCIALES",catT:"¿CATERING PARA TU EVENTO?",catP:"Contáctanos para cotizar tu fiesta o evento.",open:"Abrir menú",close:"Cerrar menú",showCats:"Ver categorías del menú",hideCats:"Ocultar categorías del menú"},
-    en: {home:"HOME",menu:"MENU",pickup:"TAKEOUT",visit:"VISIT US",loc:"LOCATION",dir:"Get directions →",hours:"HOURS",ms:"Mon–Sat",msh:"11 AM–10 PM",su:"Sunday",suh:"11 AM–9 PM",call:"CALL (252) 791-1229",seeMenu:"SEE THE MENU",social:"SOCIAL MEDIA",catT:"INTERESTED IN CATERING?",catP:"Contact us for a quote for your party or event.",open:"Open menu",close:"Close menu",showCats:"Show menu categories",hideCats:"Hide menu categories"}
+    es: {home:"INICIO",menu:"MENÚ",pickup:"PARA LLEVAR",cat:"CATERING",visit:"VISÍTANOS",loc:"UBICACIÓN",dir:"Cómo llegar →",hours:"HORARIO",ms:"Lun–Sáb",msh:"11:00–22:00",su:"Domingo",suh:"11:00–21:00",call:"LLAMAR (252) 791-1229",seeMenu:"VER EL MENÚ",social:"REDES SOCIALES",catT:"¿CATERING PARA TU EVENTO?",catP:"Contáctanos para cotizar tu fiesta o evento.",open:"Abrir menú",close:"Cerrar menú",showCats:"Ver categorías del menú",hideCats:"Ocultar categorías del menú"},
+    en: {home:"HOME",menu:"MENU",pickup:"TAKEOUT",cat:"CATERING",visit:"VISIT US",loc:"LOCATION",dir:"Get directions →",hours:"HOURS",ms:"Mon–Sat",msh:"11 AM–10 PM",su:"Sunday",suh:"11 AM–9 PM",call:"CALL (252) 791-1229",seeMenu:"SEE THE MENU",social:"SOCIAL MEDIA",catT:"INTERESTED IN CATERING?",catP:"Contact us for a quote for your party or event.",open:"Open menu",close:"Close menu",showCats:"Show menu categories",hideCats:"Hide menu categories"}
   };
   var body = document.body, btn = document.getElementById('sbBtn'), lang = 'es';
   function setOpen(o) {
@@ -753,7 +769,7 @@ render();
   var links = document.querySelectorAll('#sb nav a[data-sec]');
   function spy() {
     var cur = 'inicio';
-    ['inicio','pickup','menu','visitanos'].forEach(function (id) {
+    ['inicio','pickup','catering','menu','visitanos'].forEach(function (id) {
       var el = document.getElementById(id); if (el && el.getBoundingClientRect().top < 160) cur = id;
     });
     links.forEach(function (a) { a.classList.toggle('on', a.dataset.sec === cur); });
