@@ -90,6 +90,13 @@ a{color:#8E2614}a:hover{color:#6B1C0E}
 #sb h4{margin:0 0 8px;font-size:11px;letter-spacing:2.5px;color:#F7BE4A;font-weight:700}
 #sb nav a{display:flex;align-items:center;min-height:40px;font-size:14px;letter-spacing:1px;padding:0 10px;border-radius:10px}
 #sb nav a.on{background:#B3301A;color:#FFF4D9}
+#sb .mrow{display:flex;align-items:center;gap:4px}
+#sb .mrow a{flex:1}
+#catBtn{all:unset;cursor:pointer;width:44px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px}
+#catBtn:hover,#catBtn:focus-visible{background:#6B3A1F}
+#catBtn svg{transition:transform .2s ease}
+#catBtn[aria-expanded="true"] svg{transform:rotate(180deg)}
+#sb .cats[hidden]{display:none}
 #sb .cats{display:flex;flex-direction:column;margin:2px 0 4px 10px;border-left:2px solid #6B3A1F}
 #sb .cats button{all:unset;cursor:pointer;font-size:12px;letter-spacing:.5px;padding:6px 10px;min-height:20px;color:#F3D9A6}
 #sb .cats button:hover,#sb .cats button:focus-visible{color:#F7BE4A;outline:none}
@@ -124,8 +131,8 @@ a{color:#8E2614}a:hover{color:#6B1C0E}
   <a class="lg" href="#inicio"><img src="logo.png" alt="Casa García Mexican Restaurant"></a>
   <nav>
     <a href="#inicio" data-sec="inicio" data-t="home"></a>
-    <a href="#menu" data-sec="menu" data-t="menu"></a>
-    <div class="cats" id="sbCats"></div>
+    <div class="mrow"><a href="#menu" data-sec="menu" data-t="menu"></a><button type="button" id="catBtn" aria-expanded="false" aria-controls="sbCats"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F7BE4A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg></button></div>
+    <div class="cats" id="sbCats" hidden></div>
     <a href="#pickup" data-sec="pickup" data-t="pickup"></a>
     <a href="#visitanos" data-sec="visitanos" data-t="visit"></a>
   </nav>
@@ -705,8 +712,8 @@ render();
 <script>
 (function () {
   var L = {
-    es: {home:"INICIO",menu:"MENÚ",pickup:"PARA LLEVAR",visit:"VISÍTANOS",loc:"UBICACIÓN",dir:"Cómo llegar →",hours:"HORARIO",ms:"Lun–Sáb",msh:"11:00–22:00",su:"Domingo",suh:"11:00–21:00",call:"LLAMAR (252) 791-1229",seeMenu:"VER EL MENÚ",social:"REDES SOCIALES",catT:"¿CATERING PARA TU EVENTO?",catP:"Contáctanos para cotizar tu fiesta o evento.",open:"Abrir menú",close:"Cerrar menú"},
-    en: {home:"HOME",menu:"MENU",pickup:"TAKEOUT",visit:"VISIT US",loc:"LOCATION",dir:"Get directions →",hours:"HOURS",ms:"Mon–Sat",msh:"11 AM–10 PM",su:"Sunday",suh:"11 AM–9 PM",call:"CALL (252) 791-1229",seeMenu:"SEE THE MENU",social:"SOCIAL MEDIA",catT:"INTERESTED IN CATERING?",catP:"Contact us for a quote for your party or event.",open:"Open menu",close:"Close menu"}
+    es: {home:"INICIO",menu:"MENÚ",pickup:"PARA LLEVAR",visit:"VISÍTANOS",loc:"UBICACIÓN",dir:"Cómo llegar →",hours:"HORARIO",ms:"Lun–Sáb",msh:"11:00–22:00",su:"Domingo",suh:"11:00–21:00",call:"LLAMAR (252) 791-1229",seeMenu:"VER EL MENÚ",social:"REDES SOCIALES",catT:"¿CATERING PARA TU EVENTO?",catP:"Contáctanos para cotizar tu fiesta o evento.",open:"Abrir menú",close:"Cerrar menú",showCats:"Ver categorías del menú",hideCats:"Ocultar categorías del menú"},
+    en: {home:"HOME",menu:"MENU",pickup:"TAKEOUT",visit:"VISIT US",loc:"LOCATION",dir:"Get directions →",hours:"HOURS",ms:"Mon–Sat",msh:"11 AM–10 PM",su:"Sunday",suh:"11 AM–9 PM",call:"CALL (252) 791-1229",seeMenu:"SEE THE MENU",social:"SOCIAL MEDIA",catT:"INTERESTED IN CATERING?",catP:"Contact us for a quote for your party or event.",open:"Open menu",close:"Close menu",showCats:"Show menu categories",hideCats:"Hide menu categories"}
   };
   var body = document.body, btn = document.getElementById('sbBtn'), lang = 'es';
   function setOpen(o) {
@@ -716,6 +723,13 @@ render();
   }
   btn.addEventListener('click', function () { setOpen(!body.classList.contains('sbo')); });
   document.getElementById('sbShade').addEventListener('click', function () { setOpen(false); });
+  var catBtn = document.getElementById('catBtn'), catBox = document.getElementById('sbCats');
+  function catLabel() { catBtn.setAttribute('aria-label', catBox.hidden ? L[lang].showCats : L[lang].hideCats); }
+  catBtn.addEventListener('click', function () {
+    catBox.hidden = !catBox.hidden;
+    catBtn.setAttribute('aria-expanded', catBox.hidden ? 'false' : 'true');
+    catLabel();
+  });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && body.classList.contains('sbo')) setOpen(false); });
   document.getElementById('sb').addEventListener('click', function (e) {
     if (e.target.closest('a[href^="#"], .cats button')) setOpen(false);
@@ -733,6 +747,7 @@ render();
       });
       cats.appendChild(b);
     });
+    catLabel();
     spy();
   };
   var links = document.querySelectorAll('#sb nav a[data-sec]');
