@@ -123,6 +123,20 @@ a{color:#8E2614}a:hover{color:#6B1C0E}
 }
 @media (prefers-reduced-motion: reduce){#sb{transition:none}}
 </style>
+<style>
+#revShow{display:flex;flex-direction:column;gap:14px;align-items:center}
+#revShow .rq{transition:opacity .45s ease;margin:0;font-size:18px;color:#2E2E2E;min-height:84px;display:flex;align-items:center;justify-content:center}
+#revShow .rq.fade{opacity:0}
+#revShow .rc{font-size:12px;letter-spacing:1px;color:#555555}
+#revShow .rn{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
+#revShow .rb{font:inherit;cursor:pointer;width:44px;height:44px;border-radius:50%;border:1.5px solid #4B2410;background:transparent;color:#4B2410;display:flex;align-items:center;justify-content:center}
+#revShow .rb:hover{background:#FCE3A6}
+#revShow .dots{display:flex;gap:2px}
+#revShow .dot{all:unset;cursor:pointer;width:24px;height:24px;display:flex;align-items:center;justify-content:center}
+#revShow .dot span{width:9px;height:9px;border-radius:50%;background:#D9B95A;display:block}
+#revShow .dot[aria-current="true"] span{background:#B3301A;width:22px;border-radius:5px}
+@media (prefers-reduced-motion: reduce){#revShow .rq{transition:none}}
+</style>
 </head>
 <body>
 <button id="sbBtn" type="button" aria-label="Menu" aria-controls="sb" aria-expanded="false"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
@@ -193,7 +207,7 @@ class Component extends DCLogic {
         catOr: "¿Prefieres hablar con nosotros? Llama o escribe:", formTitle: "SOLICITA UNA COTIZACIÓN", fName: "NOMBRE *", fPhone: "TELÉFONO *", fEmail: "CORREO ELECTRÓNICO", fDate: "FECHA DEL EVENTO *", fTime: "HORA", fGuests: "NÚMERO DE PERSONAS *", fType: "TIPO DE EVENTO", types: ["Cumpleaños", "Boda", "Quinceañera", "Graduación", "Trabajo / empresa", "Iglesia / comunidad", "Otro"], fService: "SERVICIO", svcPick: "Recoger en el restaurante", svcDel: "Entrega en el lugar del evento", fPlace: "LUGAR DEL EVENTO (SI ES ENTREGA)", fMsg: "DETALLES: PLATILLOS QUE TE INTERESAN, PRESUPUESTO, ETC.", fReq: "* obligatorio", fSend: "ENVIAR SOLICITUD", sentT: "¡Casi listo!", sentP: "Se abrió tu aplicación de correo con tu solicitud. Presiona Enviar para terminar. Si no se abrió, llámanos al 252-505-1441 o escribe a casagarciallc@gmail.com.", again: "Enviar otra solicitud", cateringBtn: "CATERING", catTitle: "CATERING PARA TU EVENTO", catText: "Fiestas, reuniones de trabajo, cumpleaños y más. Llámanos o escríbenos y te preparamos una cotización.", catCall: "LLAMA: 252-505-1441", tagline: "RESTAURANTE MEXICANO", navLabel: "Principal", navMenu: "MENÚ", navAbout: "NOSOTROS", navVisit: "VISÍTANOS",
         ctaPickup: "PEDIR PARA LLEVAR", ctaPickup2: "PIDE PARA LLEVAR", ctaMenu: "EXPLORA EL MENÚ", seeMenu: "VER EL MENÚ",
         callBtn: "LLAMA: (252) 791-1229", callUs: "LLÁMANOS",
-        reviews: "597 reseñas en Google",
+        reviews: "598 reseñas en Google",
         heroTitle: "Bienvenido a mi casa",
         heroSub: "Comida mexicana hecha al momento en Plymouth, Carolina del Norte: fajitas, carne asada, mariscos, quesabirria y mucho más.",
         openDaily: "ABIERTO TODOS LOS DÍAS DESDE LAS 11:00",
@@ -220,7 +234,7 @@ class Component extends DCLogic {
         catOr: "Rather talk to us? Call or email:", formTitle: "REQUEST A QUOTE", fName: "NAME *", fPhone: "PHONE *", fEmail: "EMAIL", fDate: "EVENT DATE *", fTime: "TIME", fGuests: "NUMBER OF GUESTS *", fType: "TYPE OF EVENT", types: ["Birthday", "Wedding", "Quinceañera", "Graduation", "Work / business", "Church / community", "Other"], fService: "SERVICE", svcPick: "Pick up at the restaurant", svcDel: "Delivery to the event", fPlace: "EVENT LOCATION (IF DELIVERY)", fMsg: "DETAILS: DISHES YOU\u2019RE INTERESTED IN, BUDGET, ETC.", fReq: "* required", fSend: "SEND INQUIRY", sentT: "Almost done!", sentP: "Your email app opened with your inquiry filled in. Press Send to finish. If nothing opened, call us at 252-505-1441 or email casagarciallc@gmail.com.", again: "Send another inquiry", cateringBtn: "CATERING", catTitle: "CATERING FOR YOUR EVENT", catText: "Parties, work lunches, birthdays and more. Call or email us and we\u2019ll put together a quote for you.", catCall: "CALL 252-505-1441", tagline: "MEXICAN RESTAURANT", navLabel: "Main", navMenu: "MENU", navAbout: "ABOUT US", navVisit: "VISIT US",
         ctaPickup: "ORDER TAKEOUT", ctaPickup2: "ORDER TAKEOUT", ctaMenu: "EXPLORE THE MENU", seeMenu: "SEE THE MENU",
         callBtn: "CALL (252) 791-1229", callUs: "CALL US",
-        reviews: "597 Google reviews",
+        reviews: "598 Google reviews",
         heroTitle: "Welcome to mi casa",
         heroSub: "Mexican food made to order in Plymouth, North Carolina: fajitas, carne asada, seafood, quesabirria and much more.",
         openDaily: "OPEN DAILY FROM 11 AM",
@@ -536,11 +550,7 @@ var TPL = `<div lang="{{lang}}" style="font-family: 'Roboto Mono', ui-monospace,
           </div>
         </sc-for>
       </div>
-      <figure style="margin: 0; border: 1.5px solid #EAD49A; border-radius: 20px; padding: 32px; display: flex; flex-direction: column; gap: 12px; max-width: 760px; align-self: center; text-align: center">
-        <span style="color: #E0A100; letter-spacing: 3px" aria-hidden="true">★★★★★</span>
-        <blockquote style="margin: 0; font-size: 18px; color: #2E2E2E">{{s.review}}</blockquote>
-        <figcaption style="font-size: 12px; letter-spacing: 1px; color: #666666">{{s.reviewBy}}</figcaption>
-      </figure>
+      <figure style="margin: 0; border: 1.5px solid #EAD49A; border-radius: 20px; padding: 32px; display: flex; flex-direction: column; gap: 12px; max-width: 760px; align-self: center; text-align: center; position: relative; min-height: 220px"><div id="revShow" role="region" aria-roledescription="carousel" aria-label="Google reviews"></div></figure>
     </div>
   </section>
 
@@ -723,7 +733,45 @@ function render() {
   document.querySelectorAll('#app [data-keep]').forEach(function (el) { if (kept[el.name] != null) el.value = kept[el.name]; });
   document.documentElement.lang = vals.lang;
   setupReveal();
+  REV_LANG = vals.lang; drawRev(); if (!REV_T) restartRev();
   if (window.syncSidebar) syncSidebar(vals.lang);
+}
+var REVIEWS = [["Kerry M.", "The food was delicious! I had a steak taco, steak quesadilla, and rice. It was all good, but I thought the rice was the best tasting Mexican-style rice I had ever eaten."], ["Paul W.", "I had the super burrito and it was freakn ahhhmaaazzinig!!! … this is one of the best EVER!!"], ["Robin A.", "The food is delicious, the staff welcoming and the decor is fun."], ["Chris Y.", "Excellent service. Food was real good. The drinks were fantastic."], ["Joni B.", "The guacamole fresh and so flavorful … quesobirria tacos were hands down the best I've had around here."], ["Andrea O.", "Delicious food!! The best Mexican restaurant for flavor and price around!"], ["Susannah", "Very good food. Carne asada was amazing … Was just driving by & glad we stopped."], ["Brenda B.", "The atmosphere there was magnificent. … Every waitress was so sweet. They made you feel at home."]];
+var REV_I = Math.floor(Math.random() * REVIEWS.length), REV_LANG = 'en', REV_T = null, REV_PAUSE = false;
+var REV_RM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function revCaption(n) { return n + (REV_LANG === 'es' ? ' · RESEÑA EN GOOGLE, EN INGLÉS' : ' · GOOGLE REVIEW'); }
+function drawRev() {
+  var box = document.getElementById('revShow'); if (!box) return;
+  var r = REVIEWS[REV_I];
+  var dots = REVIEWS.map(function (_, i) {
+    return '<button type="button" class="dot" data-i="' + i + '" aria-label="' + (REV_LANG === 'es' ? 'Reseña ' : 'Review ') + (i + 1) + '"' + (i === REV_I ? ' aria-current="true"' : '') + '><span></span></button>';
+  }).join('');
+  box.innerHTML = '<span style="color:#E0A100;letter-spacing:3px" aria-hidden="true">★★★★★</span>' +
+    '<blockquote class="rq" aria-live="polite">“' + esc(r[1]) + '”</blockquote>' +
+    '<figcaption class="rc">' + esc(revCaption(r[0])) + '</figcaption>' +
+    '<div class="rn"><button type="button" class="rb" data-d="-1" aria-label="' + (REV_LANG === 'es' ? 'Reseña anterior' : 'Previous review') + '"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"></path></svg></button>' +
+    '<div class="dots">' + dots + '</div>' +
+    '<button type="button" class="rb" data-d="1" aria-label="' + (REV_LANG === 'es' ? 'Siguiente reseña' : 'Next review') + '"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg></button></div>';
+  box.onclick = function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    if (b.dataset.d) goRev(REV_I + parseInt(b.dataset.d, 10));
+    else if (b.dataset.i) goRev(parseInt(b.dataset.i, 10));
+    restartRev();
+  };
+  box.onmouseenter = function () { REV_PAUSE = true; };
+  box.onmouseleave = function () { REV_PAUSE = false; };
+  box.onfocusin = function () { REV_PAUSE = true; };
+  box.onfocusout = function () { REV_PAUSE = false; };
+}
+function goRev(i) {
+  var q = document.querySelector('#revShow .rq');
+  REV_I = (i + REVIEWS.length) % REVIEWS.length;
+  if (q && !REV_RM) { q.classList.add('fade'); setTimeout(drawRev, 450); } else drawRev();
+}
+function restartRev() {
+  if (REV_RM) return;
+  clearInterval(REV_T);
+  REV_T = setInterval(function () { if (!REV_PAUSE && !document.hidden) goRev(REV_I + 1); }, 7000);
 }
 var SEEN = {};
 document.addEventListener('submit', function (e) {
