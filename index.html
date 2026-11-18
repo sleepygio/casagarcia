@@ -10,11 +10,17 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&amp;display=swap">
 <style>
-body{margin:0;background:#FFF3CC}
-a{color:#9A3A08}a:hover{color:#6E2A06}
+body{margin:0;background:#FFF4D9}
+a{color:#8E2614}a:hover{color:#6B1C0E}
 *{box-sizing:border-box}
 </style>
 <style>html{scroll-behavior:smooth}</style>
+<style>
+.rv{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.rv.in{opacity:1;transform:none}
+.rv.now{transition:none}
+@media (prefers-reduced-motion: reduce){.rv{opacity:1;transform:none;transition:none}}
+</style>
 </head>
 <body>
 <div id="app"></div>
@@ -29,7 +35,7 @@ class Component extends DCLogic {
     this.state = { tab: 0, lang: null };
   }
   renderVals() {
-    var accent = this.props.accent ?? '#B8430A';
+    var accent = this.props.accent ?? '#B3301A';
     var self = this;
     var lang = this.state.lang || this.props.startLang || 'es';
     var T = {
@@ -272,7 +278,7 @@ class Component extends DCLogic {
       var sel = cur === i;
       return {
         label: lang === 'en' ? c.en : c.es, sel: sel ? 'true' : 'false',
-        style: pill + (sel ? 'background: ' + accent + '; color: #FFF3CC; border: 1.5px solid ' + accent + ';' : 'background: #FFF3CC; color: #3A3A3A; border: 1.5px solid #EAD49A;'),
+        style: pill + (sel ? 'background: ' + accent + '; color: #FFF4D9; border: 1.5px solid ' + accent + ';' : 'background: #FFF4D9; color: #3A3A3A; border: 1.5px solid #EAD49A;'),
         pick: function () { self.setState({ tab: i }); }
       };
     });
@@ -284,7 +290,7 @@ class Component extends DCLogic {
       var sel = lang === d[0];
       return {
         label: d[1], name: d[2], sel: sel ? 'true' : 'false',
-        style: small + (sel ? 'background: ' + accent + '; color: #FFF3CC;' : 'background: transparent; color: #3A3A3A;'),
+        style: small + (sel ? 'background: ' + accent + '; color: #FFF4D9;' : 'background: transparent; color: #3A3A3A;'),
         pick: function () { self.setState({ lang: d[0] }); }
       };
     });
@@ -292,31 +298,31 @@ class Component extends DCLogic {
     return { accent: accent, lang: lang, s: s, strip: s.strip, langs: langs, tabs: tabs, items: items, catNote: catNote, ways: ways };
   }
 }
-var TPL = `<div lang="{{lang}}" style="font-family: 'Roboto Mono', ui-monospace, Menlo, monospace; color: #3A3A3A; background: #FFF3CC; width: 100%; font-size: 15px; line-height: 1.6">
+var TPL = `<div lang="{{lang}}" style="font-family: 'Roboto Mono', ui-monospace, Menlo, monospace; color: #3A3A3A; background: #FFF4D9; width: 100%; font-size: 15px; line-height: 1.6">
 
   <!-- NAV -->
-  <header style="border-bottom: 1px solid #F0DFA8; background: #FFF3CC">
+  <header style="border-bottom: 1px solid #F0DFA8; background: #FFF4D9">
     <div style="max-width: 1240px; margin: 0 auto; padding: 16px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px">
       <a href="#inicio" style="text-decoration: none; display: inline-flex; align-items: center"><img src="logo.png" alt="Casa García Mexican Restaurant" style="height: 72px; width: auto; display: block"></a>
       <nav aria-label="{{s.navLabel}}" style="display: flex; flex-wrap: wrap; align-items: center; gap: 24px; font-size: 13px; letter-spacing: 1px">
         <a href="#menu" style="text-decoration: none; color: #3A3A3A">{{s.navMenu}}</a>
         <a href="#pickup" style="text-decoration: none; color: #3A3A3A">PICKUP</a>
         <a href="#visitanos" style="text-decoration: none; color: #3A3A3A">{{s.navVisit}}</a>
-        <div role="group" aria-label="Idioma / Language" style="display: inline-flex; background: #FFF1C7; border-radius: 999px; padding: 4px; gap: 2px">
+        <div role="group" aria-label="Idioma / Language" style="display: inline-flex; background: #FCE3A6; border-radius: 999px; padding: 4px; gap: 2px">
           <sc-for list="{{langs}}" as="l">
             <button type="button" aria-pressed="{{l.sel}}" aria-label="{{l.name}}" onclick="{{l.pick}}" style="{{l.style}}">{{l.label}}</button>
           </sc-for>
         </div>
-        <a href="#pickup" style="text-decoration: none; background: #4A2A14; color: #FFF3CC; padding: 12px 20px; border-radius: 999px; font-weight: 500; min-height: 44px; display: inline-flex; align-items: center">{{s.ctaPickup}}</a>
+        <a href="#pickup" style="text-decoration: none; background: #4B2410; color: #FFF4D9; padding: 12px 20px; border-radius: 999px; font-weight: 500; min-height: 44px; display: inline-flex; align-items: center">{{s.ctaPickup}}</a>
       </nav>
     </div>
   </header>
 
   <!-- HERO -->
-  <section id="inicio" style="background: #FFE6A6">
+  <section id="inicio" style="background: #F7BE4A">
     <div style="max-width: 1240px; margin: 0 auto; padding: 72px 24px 64px; display: flex; flex-wrap: wrap; gap: 48px; align-items: center">
       <div style="flex: 1 1 480px; min-width: 0; display: flex; flex-direction: column; gap: 24px">
-        <a href="https://share.google/5wuHtF89rM0Ik9sIl" target="_blank" rel="noopener" style="text-decoration: none; color: #2E2E2E; display: inline-flex; align-self: flex-start; align-items: center; gap: 10px; background: #FFF3CC; border: 1px solid #EAD49A; border-radius: 999px; padding: 8px 16px; font-size: 13px; min-height: 44px">
+        <a href="https://share.google/5wuHtF89rM0Ik9sIl" target="_blank" rel="noopener" style="text-decoration: none; color: #2E2E2E; display: inline-flex; align-self: flex-start; align-items: center; gap: 10px; background: #FFF4D9; border: 1px solid #EAD49A; border-radius: 999px; padding: 8px 16px; font-size: 13px; min-height: 44px">
           <span style="font-weight: 700">4.2</span>
           <span style="letter-spacing: 2px" aria-hidden="true"><span style="color: #E0A100">★★★★</span><span style="color: #E8D9A8">★</span></span>
           <span style="color: #555555">{{s.reviews}}</span>
@@ -324,7 +330,7 @@ var TPL = `<div lang="{{lang}}" style="font-family: 'Roboto Mono', ui-monospace,
         <h1 style="margin: 0; font-size: 56px; line-height: 1.05; letter-spacing: -1.5px; color: {{accent}}; font-weight: 700">{{s.heroTitle}}</h1>
         <p style="margin: 0; font-size: 17px; max-width: 520px; color: #444444">{{s.heroSub}}</p>
         <div style="display: flex; flex-wrap: wrap; gap: 12px">
-          <a href="#menu" style="text-decoration: none; background: {{accent}}; color: #FFF3CC; padding: 14px 24px; border-radius: 999px; font-weight: 500; letter-spacing: 1px; font-size: 14px; min-height: 48px; display: inline-flex; align-items: center">{{s.ctaMenu}}</a>
+          <a href="#menu" style="text-decoration: none; background: {{accent}}; color: #FFF4D9; padding: 14px 24px; border-radius: 999px; font-weight: 500; letter-spacing: 1px; font-size: 14px; min-height: 48px; display: inline-flex; align-items: center">{{s.ctaMenu}}</a>
           <a href="#pickup" style="text-decoration: none; border: 1.5px solid {{accent}}; color: {{accent}}; padding: 14px 24px; border-radius: 999px; font-weight: 500; letter-spacing: 1px; font-size: 14px; min-height: 48px; display: inline-flex; align-items: center">{{s.ctaPickup2}}</a>
         </div>
         <div style="display: flex; flex-wrap: wrap; gap: 8px 24px; font-size: 13px; letter-spacing: 1px; color: #555555">
@@ -344,18 +350,12 @@ var TPL = `<div lang="{{lang}}" style="font-family: 'Roboto Mono', ui-monospace,
           <path d="M96 30v-10M96 30l-8-7M96 30l8-7"></path>
           <path d="M70 30l14-22"></path>
         </svg>
-        <svg aria-hidden="true" width="90" height="90" viewBox="0 0 90 90" style="position: absolute; left: -28px; top: -30px" fill="none" stroke="#4A2A14" stroke-width="3" stroke-linecap="round">
-          <path d="M45 82V14"></path>
-          <path d="M45 26c-10-2-14-10-14-16 8 0 14 6 14 16zM45 26c10-2 14-10 14-16-8 0-14 6-14 16z"></path>
-          <path d="M45 46c-10-2-14-10-14-16 8 0 14 6 14 16zM45 46c10-2 14-10 14-16-8 0-14 6-14 16z"></path>
-          <path d="M45 66c-10-2-14-10-14-16 8 0 14 6 14 16zM45 66c10-2 14-10 14-16-8 0-14 6-14 16z"></path>
-        </svg>
       </div>
     </div>
   </section>
 
   <!-- STRIP -->
-  <div style="background: #4A2A14; color: #F5B700; overflow: hidden">
+  <div style="background: #1F7A3A; color: #FFF4D9; overflow: hidden; border-top: 4px solid #4B2410; border-bottom: 4px solid #4B2410">
     <div style="max-width: 1240px; margin: 0 auto; padding: 18px 24px; display: flex; flex-wrap: wrap; gap: 12px 36px; justify-content: center; font-size: 14px; letter-spacing: 2px; font-weight: 500">
       <sc-for list="{{strip}}" as="x">
         <span>{{x}}</span>
@@ -364,7 +364,7 @@ var TPL = `<div lang="{{lang}}" style="font-family: 'Roboto Mono', ui-monospace,
   </div>
 
   <!-- PICKUP -->
-  <section id="pickup" style="background: #FFF3CC">
+  <section id="pickup" style="background: #FFF4D9">
     <div style="max-width: 1240px; margin: 0 auto; padding: 96px 24px; display: flex; flex-direction: column; gap: 48px">
       <div style="display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-end; justify-content: space-between">
         <div style="flex: 1 1 480px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
@@ -372,13 +372,13 @@ var TPL = `<div lang="{{lang}}" style="font-family: 'Roboto Mono', ui-monospace,
           <p style="margin: 0; font-size: 17px; max-width: 560px">{{s.pickupText}}</p>
         </div>
         <div style="display: flex; flex-wrap: wrap; gap: 12px">
-          <a href="tel:+12527911229" style="text-decoration: none; background: #4A2A14; color: #FFF3CC; padding: 14px 24px; border-radius: 999px; font-weight: 500; letter-spacing: 1px; font-size: 14px; min-height: 48px; display: inline-flex; align-items: center">{{s.callBtn}}</a>
-          <a href="#menu" style="text-decoration: none; border: 1.5px solid #4A2A14; color: #4A2A14; padding: 14px 24px; border-radius: 999px; font-weight: 500; letter-spacing: 1px; font-size: 14px; min-height: 48px; display: inline-flex; align-items: center">{{s.seeMenu}}</a>
+          <a href="tel:+12527911229" style="text-decoration: none; background: #4B2410; color: #FFF4D9; padding: 14px 24px; border-radius: 999px; font-weight: 500; letter-spacing: 1px; font-size: 14px; min-height: 48px; display: inline-flex; align-items: center">{{s.callBtn}}</a>
+          <a href="#menu" style="text-decoration: none; border: 1.5px solid #4B2410; color: #4B2410; padding: 14px 24px; border-radius: 999px; font-weight: 500; letter-spacing: 1px; font-size: 14px; min-height: 48px; display: inline-flex; align-items: center">{{s.seeMenu}}</a>
         </div>
       </div>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px">
         <sc-for list="{{ways}}" as="w">
-          <div style="background: #FFE6A6; border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 12px">
+          <div style="background: #F7BE4A; border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 12px">
             <span style="font-size: 40px; font-weight: 700; color: {{accent}}; line-height: 1">{{w.n}}</span>
             <h3 style="margin: 0; font-size: 17px; letter-spacing: 1.5px; color: #2E2E2E">{{w.title}}</h3>
             <p style="margin: 0; font-size: 14px; color: #4A4A4A">{{w.text}}</p>
@@ -394,7 +394,7 @@ var TPL = `<div lang="{{lang}}" style="font-family: 'Roboto Mono', ui-monospace,
   </section>
 
   <!-- MENU -->
-  <section id="menu" style="background: #FFF9E8; border-top: 1px solid #F0DFA8">
+  <section id="menu" style="background: #FFF7E3; border-top: 1px solid #F0DFA8">
     <div style="max-width: 1040px; margin: 0 auto; padding: 96px 24px; display: flex; flex-direction: column; gap: 32px">
       <div style="display: flex; flex-direction: column; gap: 12px">
         <h2 style="margin: 0; font-size: 44px; letter-spacing: -1px; color: {{accent}}">{{s.menuTitle}}</h2>
@@ -406,7 +406,7 @@ var TPL = `<div lang="{{lang}}" style="font-family: 'Roboto Mono', ui-monospace,
         </sc-for>
       </div>
       <sc-if value="{{catNote}}">
-        <p style="margin: 0; padding: 14px 18px; background: #FFF1C7; border-radius: 14px; font-size: 13px; color: #3A3A3A">{{catNote}}</p>
+        <p style="margin: 0; padding: 14px 18px; background: #FCE3A6; border-radius: 14px; font-size: 13px; color: #3A3A3A">{{catNote}}</p>
       </sc-if>
       <div style="display: flex; flex-direction: column; gap: 24px">
         <sc-for list="{{items}}" as="it">
@@ -431,36 +431,36 @@ var TPL = `<div lang="{{lang}}" style="font-family: 'Roboto Mono', ui-monospace,
   </section>
 
   <!-- VISITANOS -->
-  <section id="visitanos" style="background: #4A2A14; color: #FFF1C7">
+  <section id="visitanos" style="background: #1F6B34; color: #FCE3A6">
     <div style="max-width: 1240px; margin: 0 auto; padding: 88px 24px; display: flex; flex-direction: column; gap: 40px">
-      <h2 style="margin: 0; font-size: 44px; letter-spacing: 1px; color: #F5B700">{{s.navVisit}}</h2>
+      <h2 style="margin: 0; font-size: 44px; letter-spacing: 1px; color: #F7BE4A">{{s.navVisit}}</h2>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 40px">
         <div style="display: flex; flex-direction: column; gap: 12px">
-          <h3 style="margin: 0; font-size: 13px; letter-spacing: 2px; color: #F5B700">{{s.address}}</h3>
+          <h3 style="margin: 0; font-size: 13px; letter-spacing: 2px; color: #F7BE4A">{{s.address}}</h3>
           <p style="margin: 0; font-size: 14px; white-space: pre-line">474 US Hwy 64 E
 Plymouth, NC 27962</p>
-          <a href="https://www.google.com/maps/search/?api=1&amp;query=474+US+Hwy+64+E+Plymouth+NC+27962" target="_blank" rel="noopener" style="align-self: flex-start; text-decoration: none; background: #F5B700; color: #4A2A14; padding: 12px 20px; border-radius: 999px; font-size: 13px; letter-spacing: 1px; font-weight: 500; min-height: 44px; display: inline-flex; align-items: center; margin-top: 8px">{{s.directions}}</a>
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=474+US+Hwy+64+E+Plymouth+NC+27962" target="_blank" rel="noopener" style="align-self: flex-start; text-decoration: none; background: #F7BE4A; color: #4B2410; padding: 12px 20px; border-radius: 999px; font-size: 13px; letter-spacing: 1px; font-weight: 500; min-height: 44px; display: inline-flex; align-items: center; margin-top: 8px">{{s.directions}}</a>
         </div>
         <div style="display: flex; flex-direction: column; gap: 12px">
-          <h3 style="margin: 0; font-size: 13px; letter-spacing: 2px; color: #F5B700">{{s.hours}}</h3>
+          <h3 style="margin: 0; font-size: 13px; letter-spacing: 2px; color: #F7BE4A">{{s.hours}}</h3>
           <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 16px; font-size: 14px">
             <span>{{s.monSat}}</span><span>{{s.monSatHours}}</span>
             <span>{{s.sun}}</span><span>{{s.sunHours}}</span>
           </div>
         </div>
         <div style="display: flex; flex-direction: column; gap: 12px">
-          <h3 style="margin: 0; font-size: 13px; letter-spacing: 2px; color: #F5B700">{{s.contact}}</h3>
-          <a href="tel:+12527911229" style="font-size: 14px; color: #FFF1C7">(252) 791-1229</a>
-          <a href="tel:+12527911229" style="align-self: flex-start; text-decoration: none; background: #F5B700; color: #4A2A14; padding: 12px 20px; border-radius: 999px; font-size: 13px; letter-spacing: 1px; font-weight: 500; min-height: 44px; display: inline-flex; align-items: center; margin-top: 8px">{{s.callUs}}</a>
+          <h3 style="margin: 0; font-size: 13px; letter-spacing: 2px; color: #F7BE4A">{{s.contact}}</h3>
+          <a href="tel:+12527911229" style="font-size: 14px; color: #FCE3A6">(252) 791-1229</a>
+          <a href="tel:+12527911229" style="align-self: flex-start; text-decoration: none; background: #F7BE4A; color: #4B2410; padding: 12px 20px; border-radius: 999px; font-size: 13px; letter-spacing: 1px; font-weight: 500; min-height: 44px; display: inline-flex; align-items: center; margin-top: 8px">{{s.callUs}}</a>
         </div>
         <div style="display: flex; flex-direction: column; gap: 12px">
-          <h3 style="margin: 0; font-size: 13px; letter-spacing: 2px; color: #F5B700">{{s.social}}</h3>
-          <a href="https://www.instagram.com/casagarcianc/" target="_blank" rel="noopener" style="font-size: 14px; color: #FFF1C7; display: inline-flex; align-items: center; gap: 10px; min-height: 44px">
-            <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFF1C7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><path d="M17.5 6.5h.01"></path></svg>
+          <h3 style="margin: 0; font-size: 13px; letter-spacing: 2px; color: #F7BE4A">{{s.social}}</h3>
+          <a href="https://www.instagram.com/casagarcianc/" target="_blank" rel="noopener" style="font-size: 14px; color: #FCE3A6; display: inline-flex; align-items: center; gap: 10px; min-height: 44px">
+            <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FCE3A6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><path d="M17.5 6.5h.01"></path></svg>
             Instagram: @casagarcianc
           </a>
-          <a href="https://www.facebook.com/casagarciaplymouth/" target="_blank" rel="noopener" style="font-size: 14px; color: #FFF1C7; display: inline-flex; align-items: center; gap: 10px; min-height: 44px">
-            <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFF1C7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h-2.5A3.5 3.5 0 0 0 9 6.5V9H7v3.5h2V21h3.5v-8.5H15l.5-3.5h-3V7a1 1 0 0 1 1-1H15z"></path></svg>
+          <a href="https://www.facebook.com/casagarciaplymouth/" target="_blank" rel="noopener" style="font-size: 14px; color: #FCE3A6; display: inline-flex; align-items: center; gap: 10px; min-height: 44px">
+            <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FCE3A6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h-2.5A3.5 3.5 0 0 0 9 6.5V9H7v3.5h2V21h3.5v-8.5H15l.5-3.5h-3V7a1 1 0 0 1 1-1H15z"></path></svg>
             Facebook: Casa Garcia in Plymouth
           </a>
         </div>
@@ -469,7 +469,7 @@ Plymouth, NC 27962</p>
   </section>
 
   <!-- FOOTER -->
-  <footer style="background: #FFF3CC">
+  <footer style="background: #FFF4D9">
     <div style="max-width: 1240px; margin: 0 auto; padding: 48px 24px 120px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; font-size: 12px; color: #555555">
       <img src="logo.png" alt="Casa García Mexican Restaurant" style="width: 220px; max-width: 70%; height: auto; display: block">
       <span>{{s.footerLine}}</span>
@@ -479,12 +479,12 @@ Plymouth, NC 27962</p>
 
   <!-- FLOATING BAR -->
   <div style="position: sticky; bottom: 16px; padding: 0 16px; display: flex; justify-content: flex-start; align-items: flex-end; gap: 12px; pointer-events: none; margin-top: -88px">
-    <div style="pointer-events: auto; display: flex; align-items: center; gap: 14px; background: #FFF3CC; border: 1.5px solid {{accent}}; border-radius: 999px; padding: 8px 8px 8px 20px; box-shadow: 0 6px 20px rgba(0,0,0,0.12); font-family: system-ui, sans-serif; max-width: 100%">
+    <div style="pointer-events: auto; display: flex; align-items: center; gap: 14px; background: #FFF4D9; border: 1.5px solid {{accent}}; border-radius: 999px; padding: 8px 8px 8px 20px; box-shadow: 0 6px 20px rgba(0,0,0,0.12); font-family: system-ui, sans-serif; max-width: 100%">
       <div style="display: flex; flex-direction: column; line-height: 1.25">
         <strong style="font-size: 14px; color: #2E2E2E">{{s.hurry}}</strong>
         <span style="font-size: 12px; color: #555555">{{s.hurrySub}}</span>
       </div>
-      <a href="tel:+12527911229" style="text-decoration: none; background: {{accent}}; color: #FFF3CC; border-radius: 999px; padding: 10px 18px; font-size: 13px; font-weight: 600; min-height: 44px; display: inline-flex; align-items: center">{{s.order}}</a>
+      <a href="tel:+12527911229" style="text-decoration: none; background: {{accent}}; color: #FFF4D9; border-radius: 999px; padding: 10px 18px; font-size: 13px; font-weight: 600; min-height: 44px; display: inline-flex; align-items: center">{{s.order}}</a>
     </div>
   </div>
 
@@ -526,6 +526,36 @@ function render() {
   out = fill(ifs(out, vals), vals);
   document.getElementById('app').innerHTML = out;
   document.documentElement.lang = vals.lang;
+  setupReveal();
+}
+var SEEN = {};
+var IO = ('IntersectionObserver' in window) ? new IntersectionObserver(function (es) {
+  es.forEach(function (e) {
+    if (e.isIntersecting) { e.target.classList.add('in'); SEEN[e.target.dataset.rk] = 1; IO.unobserve(e.target); }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }) : null;
+function setupReveal() {
+  if (!IO) return;
+  var app = document.getElementById('app');
+  var groups = app.querySelectorAll('section > div, footer > div, #app > div > div[style*="overflow: hidden"] > div');
+  groups.forEach(function (g, gi) {
+    var kids = Array.prototype.slice.call(g.children);
+    // grids and lists: reveal their children one by one
+    var expanded = [];
+    kids.forEach(function (k) {
+      var st = k.getAttribute('style') || '';
+      if (/display: grid|flex-direction: column; gap: 24px/.test(st) && k.children.length > 1) {
+        Array.prototype.forEach.call(k.children, function (c) { expanded.push(c); });
+      } else { expanded.push(k); }
+    });
+    expanded.forEach(function (el, i) {
+      var key = gi + '-' + i;
+      el.dataset.rk = key;
+      el.classList.add('rv');
+      el.style.transitionDelay = Math.min(i % 6, 5) * 80 + 'ms';
+      if (SEEN[key]) { el.classList.add('now', 'in'); } else { IO.observe(el); }
+    });
+  });
 }
 render();
 </script>
