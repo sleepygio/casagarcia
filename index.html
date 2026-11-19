@@ -166,8 +166,30 @@ body.intro #sbBtn{animation:introFade 1.2s ease .3s both}
 @media (min-width:1024px){body.intro #sb{animation:introSide 1.3s cubic-bezier(.2,.6,.2,1) both}}
 @media (prefers-reduced-motion: reduce){body.intro #app header,body.intro #heroVid,body.intro #sbBtn,body.intro #sb{animation:none}}
 </style>
+<style>
+#splash{position:fixed;inset:0;z-index:200;background:#2B1A10;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;animation:splashOut 1s ease 1.6s forwards}
+#splash img{width:min(320px,70vw);height:auto;opacity:0;transform:scale(.94);animation:splashLogo 1.1s cubic-bezier(.2,.6,.2,1) .15s forwards}
+#splash span{display:block;width:0;height:2px;background:#C9A24A;animation:splashLine 1s cubic-bezier(.2,.6,.2,1) .6s forwards}
+@keyframes splashLogo{to{opacity:1;transform:none}}
+@keyframes splashLine{to{width:min(180px,40vw)}}
+@keyframes splashOut{to{opacity:0;visibility:hidden}}
+body.splash.intro #app header{animation-delay:1.9s}
+body.splash.intro #heroVid{animation-delay:1.6s}
+body.splash.intro #sbBtn{animation-delay:2.1s}
+@media (min-width:1024px){body.splash.intro #sb{animation-delay:1.8s}}
+@media (prefers-reduced-motion: reduce){#splash{display:none}}
+</style>
 </head>
-<body class="intro">
+<body class="intro splash">
+<div id="splash" aria-hidden="true"><img src="logo.png" alt=""><span></span></div>
+<script>
+(function () {
+  var rm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  window.SPLASH = !rm;
+  if (rm) { document.body.classList.remove('splash'); var sp = document.getElementById('splash'); if (sp) sp.remove(); return; }
+  setTimeout(function () { var sp = document.getElementById('splash'); if (sp) sp.remove(); document.body.classList.remove('splash'); }, 2800);
+})();
+</script>
 <button id="sbBtn" type="button" aria-label="Menu" aria-controls="sb" aria-expanded="false"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
 <div id="sbShade"></div>
 <aside id="sb" aria-label="Casa García">
@@ -899,7 +921,7 @@ window.addEventListener('scroll', hurryCheck, { passive: true });
 window.addEventListener('resize', hurryCheck);
 var SEEN = {};
 var INTRO = true;
-setTimeout(function () { INTRO = false; document.body.classList.remove('intro'); }, 3200);
+setTimeout(function () { INTRO = false; document.body.classList.remove('intro'); }, window.SPLASH ? 4800 : 3200);
 window.addEventListener('hashchange', function () {
   var pg = pageFromHash(), h = location.hash.replace('#', '');
   if (pg !== comp.state.page) {
@@ -953,7 +975,7 @@ function setupReveal() {
       var key = gi + '-' + i;
       el.dataset.rk = key;
       el.classList.add('rv');
-      el.style.transitionDelay = (INTRO ? 450 + Math.min(i, 6) * 200 : Math.min(i % 6, 5) * 110) + 'ms';
+      el.style.transitionDelay = (INTRO ? (window.SPLASH ? 1900 : 450) + Math.min(i, 6) * 200 : Math.min(i % 6, 5) * 110) + 'ms';
       if (SEEN[key]) { el.classList.add('now', 'in'); } else { IO.observe(el); }
     });
   });
