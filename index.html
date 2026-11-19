@@ -478,7 +478,7 @@ class Component extends DCLogic {
       };
     });
     var ways = s.ways.map(function (w, i) { return { n: '0' + (i + 1), title: w[0], text: w[1] }; });
-    return { accent: accent, lang: lang, s: s, strip: s.strip, langs: langs, tabs: tabs, items: items, catNote: catNote, ways: ways, page: this.state.page, catSent: !!this.state.catSent, notSent: !this.state.catSent, resetCat: function () { self.setState({ catSent: false }); } };
+    return { accent: accent, lang: lang, s: s, strip: s.strip.map(function (w) { return w === '•' ? { sep: true } : { word: w }; }), langs: langs, tabs: tabs, items: items, catNote: catNote, ways: ways, page: this.state.page, catSent: !!this.state.catSent, notSent: !this.state.catSent, resetCat: function () { self.setState({ catSent: false }); } };
   }
 }
 var TPL = `<div lang="{{lang}}" style="font-family: 'Work Sans', system-ui, sans-serif; color: #3A3A3A; background: #FBF7F0; width: 100%; font-size: 15px; line-height: 1.6">
@@ -532,7 +532,7 @@ var TPL = `<div lang="{{lang}}" style="font-family: 'Work Sans', system-ui, sans
   <div style="background: #2B1A10; color: #FBF7F0; overflow: hidden; border-top: 4px solid #2B1A10; border-bottom: 4px solid #2B1A10">
     <div style="max-width: 1240px; margin: 0 auto; padding: 18px 24px; display: flex; flex-wrap: wrap; gap: 12px 36px; justify-content: center; font-size: 14px; letter-spacing: 2px; font-weight: 500">
       <sc-for list="{{strip}}" as="x">
-        <span style="font-variant-emoji: text">{{x}}</span>
+        <sc-if value="{{x.sep}}"><span aria-hidden="true" style="display: inline-flex; align-items: center"><svg role="img" aria-label="·" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C9A24A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="display: block"><path d="M2.5 5h19"></path><path d="M2.5 5c0 3.6 4 5.6 9.5 5.6s9.5-2 9.5-5.6"></path><path d="M8.6 10.2c.2 2 1.6 3.2 3.4 3.2s3.2-1.2 3.4-3.2"></path><path d="M12 13.4v6.6"></path><path d="M8.2 20.4h7.6"></path><path d="M15.6 5a3.2 3.2 0 0 1 6.2-1.6z"></path></svg></span></sc-if><sc-if value="{{x.word}}"><span>{{x.word}}</span></sc-if>
       </sc-for>
     </div>
   </div>
