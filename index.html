@@ -148,6 +148,13 @@ a{color:#7E2414}a:hover{color:#5E1A0E}
 #revShow .dot[aria-current="true"] span{background:#9E2F1B}
 #revShow .rq{font-size:21px}
 </style>
+<style>
+#hurry{opacity:0;transform:translateY(24px);visibility:hidden;transition:opacity .8s ease,transform .8s ease,visibility 0s linear .8s}
+#hurry > *{pointer-events:none !important}
+body.hurry-on #hurry{opacity:1;transform:none;visibility:visible;transition:opacity .8s ease,transform .8s ease,visibility 0s}
+body.hurry-on #hurry > *{pointer-events:auto !important}
+@media (prefers-reduced-motion: reduce){#hurry,body.hurry-on #hurry{transition:none;transform:none}}
+</style>
 </head>
 <body>
 <button id="sbBtn" type="button" aria-label="Menu" aria-controls="sb" aria-expanded="false"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
@@ -712,7 +719,7 @@ Plymouth, NC 27962</p>
   </footer>
 
   <!-- FLOATING BAR -->
-  <div style="position: sticky; bottom: 16px; padding: 0 16px; display: flex; justify-content: flex-start; align-items: flex-end; gap: 12px; pointer-events: none; margin-top: -88px">
+  <div id="hurry" style="position: sticky; bottom: 16px; padding: 0 16px; display: flex; justify-content: flex-start; align-items: flex-end; gap: 12px; pointer-events: none; margin-top: -88px">
     <div style="pointer-events: auto; display: flex; align-items: center; gap: 14px; background: #FBF7F0; border: 1.5px solid {{accent}}; border-radius: 6px; padding: 8px 8px 8px 20px; box-shadow: 0 6px 20px rgba(0,0,0,0.12); font-family: 'Work Sans', system-ui, sans-serif; max-width: 100%">
       <div style="display: flex; flex-direction: column; line-height: 1.25">
         <strong style="font-size: 14px; color: #2E2E2E">{{s.hurry}}</strong>
@@ -772,6 +779,7 @@ function render() {
   document.querySelectorAll('#app [data-keep]').forEach(function (el) { if (kept[el.name] != null) el.value = kept[el.name]; });
   document.documentElement.lang = vals.lang;
   setupReveal();
+  hurryCheck();
   heroVideo();
   REV_LANG = vals.lang; drawRev(); if (!REV_T) restartRev();
   if (window.syncSidebar) syncSidebar(vals.lang, vals.tabs, vals.page);
@@ -830,6 +838,13 @@ function heroVideo() {
   }, { passive: true });
 });
 document.addEventListener('visibilitychange', function () { if (!document.hidden) heroVideo(); });
+function hurryCheck() {
+  var y = window.scrollY || document.documentElement.scrollTop || 0;
+  var limit = Math.min(600, (window.innerHeight || 800) * 0.6);
+  document.body.classList.toggle('hurry-on', y > limit);
+}
+window.addEventListener('scroll', hurryCheck, { passive: true });
+window.addEventListener('resize', hurryCheck);
 var SEEN = {};
 window.addEventListener('hashchange', function () {
   var pg = pageFromHash(), h = location.hash.replace('#', '');
