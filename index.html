@@ -226,6 +226,23 @@ function tcase(x) {
     return w.replace(/(^|[\(\-\/])([a-záéíóúñü])/g, function (_, p, c) { return p + c.toUpperCase(); });
   }).join(' ');
 }
+function etNow() {
+  try {
+    var parts = new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', weekday: 'short', hour: 'numeric', minute: 'numeric', hour12: false }).formatToParts(new Date());
+    var o = {}; parts.forEach(function (p) { o[p.type] = p.value; });
+    var days = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+    return { day: days[o.weekday], mins: (parseInt(o.hour, 10) % 24) * 60 + parseInt(o.minute, 10) };
+  } catch (e) { var d = new Date(); return { day: d.getDay(), mins: d.getHours() * 60 + d.getMinutes() }; }
+}
+function openStatus(lang) {
+  var n = etNow(), close = n.day === 0 ? 21 * 60 : 22 * 60, openAt = 11 * 60;
+  var es = lang === 'es';
+  if (n.mins >= openAt && n.mins < close) {
+    return { open: true, txt: es ? ('ABIERTO AHORA · HASTA LAS ' + (n.day === 0 ? '21:00' : '22:00')) : ('OPEN NOW · UNTIL ' + (n.day === 0 ? '9 PM' : '10 PM')) };
+  }
+  if (n.mins < openAt) return { open: false, txt: es ? 'CERRADO · ABRE HOY A LAS 11:00' : 'CLOSED · OPENS TODAY AT 11 AM' };
+  return { open: false, txt: es ? 'CERRADO · ABRE MAÑANA A LAS 11:00' : 'CLOSED · OPENS TOMORROW AT 11 AM' };
+}
 class DCLogic {
   constructor(props) { this.props = props || {}; this.state = {}; }
   setState(o) { Object.assign(this.state, o); render(); }
@@ -241,7 +258,7 @@ class Component extends DCLogic {
     var lang = this.state.lang || this.props.startLang || 'en';
     var T = {
       es: {
-        catOr: "¿Prefieres hablar con nosotros? Llama o escribe:", formTitle: "Solicita una cotización", fName: "NOMBRE *", fPhone: "TELÉFONO *", fEmail: "CORREO ELECTRÓNICO", fDate: "FECHA DEL EVENTO *", fTime: "HORA", fGuests: "NÚMERO DE PERSONAS *", fType: "TIPO DE EVENTO", types: ["Cumpleaños", "Boda", "Quinceañera", "Graduación", "Trabajo / empresa", "Iglesia / comunidad", "Otro"], fService: "SERVICIO", svcPick: "Recoger en el restaurante", svcDel: "Entrega en el lugar del evento", fPlace: "LUGAR DEL EVENTO (SI ES ENTREGA)", fMsg: "DETALLES: PLATILLOS QUE TE INTERESAN, PRESUPUESTO, ETC.", fReq: "* obligatorio", fSend: "ENVIAR SOLICITUD", sentT: "¡Casi listo!", sentP: "Se abrió tu aplicación de correo con tu solicitud. Presiona Enviar para terminar. Si no se abrió, llámanos al 252-505-1441 o escribe a casagarciallc@gmail.com.", again: "Enviar otra solicitud", tMenuT: "Nuestro menú", tMenuP: "Más de 100 platillos: fajitas, carne asada, mariscos, quesabirria, especiales de lunch y más.", tCatT: "Catering", tCatP: "Fiestas, reuniones de trabajo, cumpleaños y más. Pide tu cotización en línea.", cateringBtn: "CATERING", catTitle: "Catering para tu evento", catText: "Fiestas, reuniones de trabajo, cumpleaños y más. Llámanos o escríbenos y te preparamos una cotización.", catCall: "LLAMA: 252-505-1441", tagline: "RESTAURANTE MEXICANO", navLabel: "Principal", navMenu: "MENÚ", navAbout: "NOSOTROS", navVisit: "Visítanos",
+        catOr: "¿Prefieres hablar con nosotros? Llama o escribe:", formTitle: "Solicita una cotización", fName: "NOMBRE *", fPhone: "TELÉFONO *", fEmail: "CORREO ELECTRÓNICO", fDate: "FECHA DEL EVENTO *", fTime: "HORA", fGuests: "NÚMERO DE PERSONAS *", fType: "TIPO DE EVENTO", types: ["Cumpleaños", "Boda", "Quinceañera", "Graduación", "Trabajo / empresa", "Iglesia / comunidad", "Otro"], fService: "SERVICIO", svcPick: "Recoger en el restaurante", svcDel: "Entrega en el lugar del evento", fPlace: "LUGAR DEL EVENTO (SI ES ENTREGA)", fMsg: "DETALLES: PLATILLOS QUE TE INTERESAN, PRESUPUESTO, ETC.", fReq: "* obligatorio", fSend: "ENVIAR SOLICITUD", sentT: "¡Casi listo!", sentP: "Se abrió tu aplicación de correo con tu solicitud. Presiona Enviar para terminar. Si no se abrió, llámanos al 252-505-1441 o escribe a casagarciallc@gmail.com.", again: "Enviar otra solicitud", tMenuT: "Nuestro menú", tMenuP: "Más de 100 platillos: fajitas, carne asada, mariscos, quesabirria, especiales de lunch y más.", tCatT: "Catering", tCatP: "Fiestas, reuniones de trabajo, cumpleaños y más. Pide tu cotización en línea.", searchPh: "Buscar en el menú: camarón, fajitas, enchiladas…", clearSearch: "Ver categorías otra vez", mapTitle: "Mapa de Casa García en Plymouth", cateringBtn: "CATERING", catTitle: "Catering para tu evento", catText: "Fiestas, reuniones de trabajo, cumpleaños y más. Llámanos o escríbenos y te preparamos una cotización.", catCall: "LLAMA: 252-505-1441", tagline: "RESTAURANTE MEXICANO", navLabel: "Principal", navMenu: "MENÚ", navAbout: "NOSOTROS", navVisit: "Visítanos",
         ctaPickup: "PEDIR PARA LLEVAR", ctaPickup2: "PIDE PARA LLEVAR", ctaMenu: "EXPLORA EL MENÚ", seeMenu: "VER EL MENÚ",
         callBtn: "LLAMA: (252) 791-1229", callUs: "LLÁMANOS",
         reviews: "598 reseñas en Google",
@@ -268,7 +285,7 @@ class Component extends DCLogic {
         hurry: "¿Con prisa?", hurrySub: "Llama y recoge tu pedido para llevar", order: "LLAMAR"
       },
       en: {
-        catOr: "Rather talk to us? Call or email:", formTitle: "Request a quote", fName: "NAME *", fPhone: "PHONE *", fEmail: "EMAIL", fDate: "EVENT DATE *", fTime: "TIME", fGuests: "NUMBER OF GUESTS *", fType: "TYPE OF EVENT", types: ["Birthday", "Wedding", "Quinceañera", "Graduation", "Work / business", "Church / community", "Other"], fService: "SERVICE", svcPick: "Pick up at the restaurant", svcDel: "Delivery to the event", fPlace: "EVENT LOCATION (IF DELIVERY)", fMsg: "DETAILS: DISHES YOU\u2019RE INTERESTED IN, BUDGET, ETC.", fReq: "* required", fSend: "SEND INQUIRY", sentT: "Almost done!", sentP: "Your email app opened with your inquiry filled in. Press Send to finish. If nothing opened, call us at 252-505-1441 or email casagarciallc@gmail.com.", again: "Send another inquiry", tMenuT: "Our menu", tMenuP: "Over 100 dishes: fajitas, carne asada, seafood, quesabirria, lunch specials and more.", tCatT: "Catering", tCatP: "Parties, work lunches, birthdays and more. Request a quote online.", cateringBtn: "CATERING", catTitle: "Catering for your event", catText: "Parties, work lunches, birthdays and more. Call or email us and we\u2019ll put together a quote for you.", catCall: "CALL 252-505-1441", tagline: "MEXICAN RESTAURANT", navLabel: "Main", navMenu: "MENU", navAbout: "ABOUT US", navVisit: "Visit us",
+        catOr: "Rather talk to us? Call or email:", formTitle: "Request a quote", fName: "NAME *", fPhone: "PHONE *", fEmail: "EMAIL", fDate: "EVENT DATE *", fTime: "TIME", fGuests: "NUMBER OF GUESTS *", fType: "TYPE OF EVENT", types: ["Birthday", "Wedding", "Quinceañera", "Graduation", "Work / business", "Church / community", "Other"], fService: "SERVICE", svcPick: "Pick up at the restaurant", svcDel: "Delivery to the event", fPlace: "EVENT LOCATION (IF DELIVERY)", fMsg: "DETAILS: DISHES YOU\u2019RE INTERESTED IN, BUDGET, ETC.", fReq: "* required", fSend: "SEND INQUIRY", sentT: "Almost done!", sentP: "Your email app opened with your inquiry filled in. Press Send to finish. If nothing opened, call us at 252-505-1441 or email casagarciallc@gmail.com.", again: "Send another inquiry", tMenuT: "Our menu", tMenuP: "Over 100 dishes: fajitas, carne asada, seafood, quesabirria, lunch specials and more.", tCatT: "Catering", tCatP: "Parties, work lunches, birthdays and more. Request a quote online.", searchPh: "Search the menu: shrimp, fajitas, enchiladas…", clearSearch: "Back to categories", mapTitle: "Map of Casa García in Plymouth", cateringBtn: "CATERING", catTitle: "Catering for your event", catText: "Parties, work lunches, birthdays and more. Call or email us and we\u2019ll put together a quote for you.", catCall: "CALL 252-505-1441", tagline: "MEXICAN RESTAURANT", navLabel: "Main", navMenu: "MENU", navAbout: "ABOUT US", navVisit: "Visit us",
         ctaPickup: "ORDER TAKEOUT", ctaPickup2: "ORDER TAKEOUT", ctaMenu: "EXPLORE THE MENU", seeMenu: "SEE THE MENU",
         callBtn: "CALL (252) 791-1229", callUs: "CALL US",
         reviews: "598 Google reviews",
@@ -480,12 +497,26 @@ class Component extends DCLogic {
       return {
         label: tcase(lang === 'en' ? c.en : c.es), sel: sel ? 'true' : 'false',
         style: pill + (sel ? 'background: ' + accent + '; color: #FBF7F0; border: 1.5px solid ' + accent + ';' : 'background: #FBF7F0; color: #3A3A3A; border: 1.5px solid #E3D6BE;'),
-        pick: function () { self.setState({ tab: i }); }
+        pick: function () { self.setState({ tab: i, q: '' }); }
       };
     });
     var cat = MENU[cur] || MENU[0];
-    var catNote = (lang === 'en' ? cat.noteEn : cat.noteEs) || '';
-    var items = cat.items.map(function (x) { return { name: tcase(x[0]), price: x[1], desc: x[2] }; });
+    var q = (this.state.q || '').trim();
+    var fold = function (t) { return (t || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''); };
+    var catNote = q ? '' : ((lang === 'en' ? cat.noteEn : cat.noteEs) || '');
+    var items;
+    if (q) {
+      var fq = fold(q);
+      items = [];
+      MENU.forEach(function (c) {
+        c.items.forEach(function (x) {
+          if (fold(x[0]).indexOf(fq) > -1 || fold(x[2]).indexOf(fq) > -1) items.push({ name: tcase(x[0]), price: x[1], desc: x[2], cat: tcase(lang === 'en' ? c.en : c.es) });
+        });
+      });
+    } else {
+      items = cat.items.map(function (x) { return { name: tcase(x[0]), price: x[1], desc: x[2] }; });
+    }
+    var st = openStatus(lang);
     var small = 'font-family: inherit; font-size: 12px; letter-spacing: 1px; padding: 8px 14px; border-radius: 6px; border: none; cursor: pointer; min-height: 36px; min-width: 44px; ';
     var langs = [['en', 'EN', 'English'], ['es', 'ES', 'Español']].map(function (d) {
       var sel = lang === d[0];
@@ -496,7 +527,7 @@ class Component extends DCLogic {
       };
     });
     var ways = s.ways.map(function (w, i) { return { n: '0' + (i + 1), title: w[0], text: w[1] }; });
-    return { accent: accent, lang: lang, s: s, strip: s.strip.map(function (w) { return w === '•' ? { sep: true } : { word: w }; }), langs: langs, tabs: tabs, items: items, catNote: catNote, ways: ways, page: this.state.page, catSent: !!this.state.catSent, notSent: !this.state.catSent, resetCat: function () { self.setState({ catSent: false }); } };
+    return { openTxt: st.txt, openDot: st.open ? '#7BC47F' : '#C8553D', q: q, searching: !!q, noRes: !!q && !items.length, noResTxt: (lang === 'en' ? 'No dishes match \u201c' : 'Ning\u00fan platillo coincide con \u201c') + q + '\u201d.', onQ: function () { var el = document.getElementById('menuSearch'); self.setState({ q: el ? el.value : '' }); }, clearQ: function () { self.setState({ q: '' }); }, accent: accent, lang: lang, s: s, strip: s.strip.map(function (w) { return w === '•' ? { sep: true } : { word: w }; }), langs: langs, tabs: tabs, items: items, catNote: catNote, ways: ways, page: this.state.page, catSent: !!this.state.catSent, notSent: !this.state.catSent, resetCat: function () { self.setState({ catSent: false }); } };
   }
 }
 var TPL = `<div lang="{{lang}}" style="font-family: 'Work Sans', system-ui, sans-serif; color: #3A3A3A; background: #FBF7F0; width: 100%; font-size: 15px; line-height: 1.6">
@@ -540,7 +571,7 @@ var TPL = `<div lang="{{lang}}" style="font-family: 'Work Sans', system-ui, sans
         </div>
         <div style="display: flex; flex-wrap: wrap; gap: 8px 24px; font-size: 13px; letter-spacing: 1px; color: #FBF7F0">
           <span>474 US HWY 64 E, PLYMOUTH, NC</span>
-          <span style="display: inline-flex; align-items: center; gap: 8px"><span style="width: 8px; height: 8px; border-radius: 50%; background: #7BC47F; display: inline-block" aria-hidden="true"></span>{{s.openDaily}}</span>
+          <span style="display: inline-flex; align-items: center; gap: 8px"><span style="width: 8px; height: 8px; border-radius: 50%; background: {{openDot}}; display: inline-block" aria-hidden="true"></span>{{openTxt}}</span>
         </div>
       </div>
     </div>
@@ -632,6 +663,7 @@ Plymouth, NC 27962</p>
           </a>
         </div>
       </div>
+      <iframe title="{{s.mapTitle}}" src="https://www.google.com/maps?q=Casa+Garcia+Mexican+Restaurant,+474+US+Hwy+64+E,+Plymouth,+NC+27962&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" style="width: 100%; height: 340px; border: 0; border-radius: 10px; display: block; background: #2B1A10"></iframe>
     </div>
   </section>
 
@@ -689,6 +721,12 @@ Plymouth, NC 27962</p>
         <h2 style="margin: 0; font-size: 44px; letter-spacing: -1px; color: {{accent}}">{{s.menuTitle}}</h2>
         <p style="margin: 0; max-width: 680px">{{s.menuIntro}}</p>
       </div>
+      <div style="position: relative; max-width: 520px">
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6B5A4A" stroke-width="2" stroke-linecap="round" style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%)"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>
+        <input id="menuSearch" type="search" value="{{q}}" oninput="{{onQ}}" placeholder="{{s.searchPh}}" aria-label="{{s.searchPh}}" autocomplete="off" style="width: 100%; box-sizing: border-box; min-height: 50px; padding: 12px 16px 12px 44px; border: 1.5px solid #D8C8A8; border-radius: 6px; background: #FFFFFF; color: #2E2E2E; font: inherit; font-size: 16px">
+      </div>
+      <sc-if value="{{searching}}"><p style="margin: 0; font-size: 14px; color: #555555"><button type="button" onclick="{{clearQ}}" style="font: inherit; cursor: pointer; background: none; border: none; color: #9E2F1B; text-decoration: underline; padding: 8px 0; min-height: 40px">{{s.clearSearch}}</button></p></sc-if>
+      <sc-if value="{{noRes}}"><p style="margin: 0; font-size: 16px; color: #2E2E2E">{{noResTxt}}</p></sc-if>
       <div role="tablist" aria-label="{{s.menuTitle}}" style="display: flex; flex-wrap: wrap; gap: 8px">
         <sc-for list="{{tabs}}" as="t">
           <button type="button" role="tab" aria-selected="{{t.sel}}" onclick="{{t.pick}}" style="{{t.style}}">{{t.label}}</button>
@@ -705,6 +743,7 @@ Plymouth, NC 27962</p>
               <span aria-hidden="true" style="flex: 1 1 auto; border-bottom: 2px dotted #D8C8A8; transform: translateY(-4px); min-width: 24px"></span>
               <span style="font-weight: 700; color: {{accent}}; white-space: nowrap">{{it.price}}</span>
             </div>
+            <sc-if value="{{it.cat}}"><span style="font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: #6B5A4A">{{it.cat}}</span></sc-if>
             <sc-if value="{{it.desc}}">
               <p style="margin: 0; font-size: 14px; color: #4A4A4A; max-width: 760px">{{it.desc}}</p>
             </sc-if>
@@ -781,6 +820,7 @@ function fors(str, scope) {
 function __fn(i) { FNS[i](); }
 var comp = new Component({});
 function render() {
+  var ae = document.activeElement, focusSearch = ae && ae.id === 'menuSearch', caret = focusSearch ? ae.selectionStart : 0;
   var kept = {}; document.querySelectorAll('#app [data-keep]').forEach(function (el) { kept[el.name] = el.value; });
   FNS = [];
   var vals = comp.renderVals();
@@ -790,6 +830,7 @@ function render() {
   document.querySelectorAll('#app [data-keep]').forEach(function (el) { if (kept[el.name] != null) el.value = kept[el.name]; });
   document.documentElement.lang = vals.lang;
   setupReveal();
+  if (focusSearch) { var ms = document.getElementById('menuSearch'); if (ms) { ms.focus(); try { ms.setSelectionRange(caret, caret); } catch (e) {} } }
   hurryCheck();
   heroVideo();
   REV_LANG = vals.lang; drawRev(); if (!REV_T) restartRev();
@@ -939,6 +980,11 @@ render();
     catBox.hidden = !catBox.hidden;
     catBtn.setAttribute('aria-expanded', catBox.hidden ? 'false' : 'true');
     catLabel();
+    try { var tday = etNow().day; var sun = tday === 0;
+      document.querySelectorAll('#sb .hrs span').forEach(function (sp) {
+        var k = sp.dataset.t, on = sun ? (k === 'su' || k === 'suh') : (k === 'ms' || k === 'msh');
+        sp.style.color = on ? '#C9A24A' : ''; sp.style.fontWeight = on ? '600' : '';
+      }); } catch (e) {}
   });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && body.classList.contains('sbo')) setOpen(false); });
   document.getElementById('sb').addEventListener('click', function (e) {
