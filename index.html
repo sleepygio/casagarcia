@@ -284,7 +284,7 @@ class Component extends DCLogic {
         ctaPickup: "PEDIR PARA LLEVAR", ctaPickup2: "PIDE PARA LLEVAR", ctaMenu: "EXPLORA EL MENÚ", seeMenu: "VER EL MENÚ",
         callBtn: "LLAMA: (252) 791-1229", callUs: "LLÁMANOS",
         reviews: "598 reseñas en Google",
-        heroTitle: "Bienvenido a mi Casa",
+        heroTitle: "Bienvenido a Mi Casa",
         heroSub: "Comida mexicana hecha al momento en Plymouth, Carolina del Norte: fajitas, carne asada, mariscos, quesabirria y mucho más.",
         openDaily: "ABIERTO TODOS LOS DÍAS DESDE LAS 11:00",
         photo1: "FOTO: FAJITAS / PLATILLO ESTRELLA", photo2: "FOTO: EL RESTAURANTE / EL EQUIPO",
@@ -311,7 +311,7 @@ class Component extends DCLogic {
         ctaPickup: "ORDER TAKEOUT", ctaPickup2: "ORDER TAKEOUT", ctaMenu: "EXPLORE THE MENU", seeMenu: "SEE THE MENU",
         callBtn: "CALL (252) 791-1229", callUs: "CALL US",
         reviews: "598 Google reviews",
-        heroTitle: "Welcome to mi Casa",
+        heroTitle: "Welcome to Mi Casa",
         heroSub: "Mexican food made to order in Plymouth, North Carolina: fajitas, carne asada, seafood, quesabirria and much more.",
         openDaily: "OPEN DAILY FROM 11 AM",
         photo1: "PHOTO: FAJITAS / SIGNATURE DISH", photo2: "PHOTO: THE RESTAURANT / THE TEAM",
@@ -920,15 +920,21 @@ function hurryCheck() {
 window.addEventListener('scroll', hurryCheck, { passive: true });
 window.addEventListener('resize', hurryCheck);
 var SEEN = {};
+var ENTER = false, ENTER_T = null;
 var INTRO = true;
 setTimeout(function () { INTRO = false; document.body.classList.remove('intro'); }, window.SPLASH ? 4800 : 3200);
 window.addEventListener('hashchange', function () {
   var pg = pageFromHash(), h = location.hash.replace('#', '');
   if (pg !== comp.state.page) {
     SEEN = {};
+    var toAnchor = pg === 'home' && h && h !== 'inicio';
+    if (!toAnchor) {
+      window.scrollTo(0, 0);
+      ENTER = true; clearTimeout(ENTER_T); ENTER_T = setTimeout(function () { ENTER = false; }, 1600);
+    }
     comp.setState({ page: pg });
-    var el = (pg === 'home' && h) ? document.getElementById(h) : null;
-    if (el) el.scrollIntoView(); else window.scrollTo(0, 0);
+    var el = toAnchor ? document.getElementById(h) : null;
+    if (el) el.scrollIntoView();
   } else if (pg !== 'home') { window.scrollTo(0, 0); }
 });
 
@@ -974,9 +980,13 @@ function setupReveal() {
     expanded.forEach(function (el, i) {
       var key = gi + '-' + i;
       el.dataset.rk = key;
+      // Only animate what is on screen when the site first opens; everything further down is simply there.
+      if (!(INTRO || ENTER) || SEEN[key]) return;
+      var vh = window.innerHeight || 800;
+      if (el.getBoundingClientRect().top > vh) return;
       el.classList.add('rv');
-      el.style.transitionDelay = (INTRO ? (window.SPLASH ? 1900 : 450) + Math.min(i, 6) * 200 : Math.min(i % 6, 5) * 110) + 'ms';
-      if (SEEN[key]) { el.classList.add('now', 'in'); } else { IO.observe(el); }
+      el.style.transitionDelay = (INTRO ? (window.SPLASH ? 1900 : 450) + Math.min(i, 6) * 200 : 60 + Math.min(i, 6) * 130) + 'ms';
+      IO.observe(el);
     });
   });
 }
